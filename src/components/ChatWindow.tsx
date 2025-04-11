@@ -115,7 +115,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         ...prevMessages,
         {
           source: "agent",
-          content: `This is a test response to: "${userMessage}" This is a test response to: "${userMessage}"This is a test response to: "${userMessage}"This is a test response to: "${userMessage}"This is a test response to: "${userMessage}"This is a test response to: "${userMessage}"This is a test response to: "${userMessage}"This is a test response to: "${userMessage}"`,
+          content: `This is a test response to: "${userMessage}"`,
         }
       ]);
     }, 500);
