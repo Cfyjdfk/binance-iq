@@ -126,7 +126,7 @@ const Hero: React.FC = () => {
                 <div className="space-y-8">
                     <div>
                         <h1 className="text-7xl font-bold mb-4 text-[#FCD535]">
-                            268,873,677
+                            {formatNumber(userCount)}
                         </h1>
                         <h2 className="text-7xl font-bold text-white">
                             USERS TRUST US
