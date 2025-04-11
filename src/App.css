@@ -1,0 +1,5 @@
+/* Custom styles that don't conflict with Tailwind */
+.main-content {
+  @apply container mx-auto px-4;
+}
+
