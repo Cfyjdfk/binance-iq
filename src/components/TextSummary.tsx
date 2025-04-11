@@ -11,8 +11,35 @@ const TextSummary: React.FC<TextSummaryProps> = ({ children }) => {
     x: number;
     y: number;
   } | null>(null);
+  const [tooltipPosition, setTooltipPosition] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
   const originalStateRef = useRef<Node[] | null>(null);
   const highlightedRangeRef = useRef<Range | null>(null);
+
+  // Listen for text selection to show the tooltip
+  useEffect(() => {
+    const handleSelection = () => {
+      const selection = window.getSelection();
+      if (selection && selection.toString().trim() && !popupPosition) {
+        const range = selection.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+        
+        // Position tooltip above the selection
+        setTooltipPosition({
+          x: rect.left + (rect.width / 2) + window.scrollX,
+          y: rect.top + window.scrollY - 10
+        });
+      } else if (!selection || selection.toString().trim() === "") {
+        // Hide tooltip when no text is selected
+        setTooltipPosition(null);
+      }
+    };
+
+    document.addEventListener("selectionchange", handleSelection);
+    return () => document.removeEventListener("selectionchange", handleSelection);
+  }, [popupPosition]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -37,6 +64,8 @@ const TextSummary: React.FC<TextSummaryProps> = ({ children }) => {
           // Store the text and position
           setSelectedText(text);
           setPopupPosition({ x, y });
+          // Hide tooltip when chat window opens
+          setTooltipPosition(null);
 
           // Use the surroundContents method instead of replacing
           highlightSelectedContent(range);
@@ -146,6 +175,22 @@ const TextSummary: React.FC<TextSummaryProps> = ({ children }) => {
   return (
     <>
       <div className="text-summary-container select-text">{children}</div>
+      
+      {/* Tooltip for keyboard shortcut */}
+      {tooltipPosition && !popupPosition && (
+        <div 
+          className="absolute bg-binance-gray text-white text-xs py-1 px-2 rounded pointer-events-none z-50 transform -translate-x-1/2 -translate-y-full"
+          style={{
+            top: `${tooltipPosition.y}px`,
+            left: `${tooltipPosition.x}px`,
+            boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
+          }}
+        >
+          <span className="font-medium">⌘K / Ctrl+K</span>
+          <div className="absolute w-2 h-2 bg-binance-gray rotate-45 left-1/2 -bottom-1 -ml-1"></div>
+        </div>
+      )}
+      
       {popupPosition && (
         <ChatWindow
           context={selectedText}
