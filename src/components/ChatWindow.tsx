@@ -150,7 +150,10 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
         {/* Fixed Input Area */}
         <form
-          onSubmit={handleSendMessage}
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSendMessage();
+          }}
           className="flex flex-row w-full justify-between items-center text-sm mt-auto shrink-0"
         >
           <input
