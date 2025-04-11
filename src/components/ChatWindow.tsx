@@ -6,6 +6,11 @@ interface ChatWindowProps {
   onClose: () => void;
 }
 
+interface Message {
+  source: "user" | "agent";
+  content: string;
+}
+
 const summaryDictionary: Record<string, string> = {
   Launchpool:
     "A platform where users stake crypto to earn new tokens before listing",
@@ -24,7 +29,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [offsetPosition, setOffsetPosition] = useState(position);
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [textInput, setTextInput] = useState("");
 
   // Update position when scrolling to keep anchored to selection
@@ -87,13 +92,37 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
   }, [position]); // Focus when chat window opens (position changes from null)
 
   const handleSendMessage = () => {
+    if (!textInput.trim()) return;
+    
+    // Add user message
     setMessages((prev) => [
       ...prev,
-      "This is a sample response that will make the window grow taller...",
+      {
+        source: "user",
+        content: textInput,
+      }
     ]);
+    
+    // Store the text input before clearing it
+    const userMessage = textInput;
+    
+    // Clear input field
+    setTextInput("");
+    
+    // Simulate agent response with a slight delay to avoid UI jank
+    setTimeout(() => {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          source: "agent",
+          content: `This is a test response to: "${userMessage}" This is a test response to: "${userMessage}"This is a test response to: "${userMessage}"This is a test response to: "${userMessage}"This is a test response to: "${userMessage}"This is a test response to: "${userMessage}"This is a test response to: "${userMessage}"This is a test response to: "${userMessage}"`,
+        }
+      ]);
+    }, 500);
   };
 
   if (!position || !offsetPosition) return null;
+
 
   return (
     <div
@@ -128,7 +157,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
           </button>
         </div>
 
-        {/* Scrollable Content Area - Added ref */}
+        {/* Scrollable Content Area */}
         <div
           ref={scrollContainerRef}
           className="flex-1 overflow-y-auto pr-2 space-y-4 mb-4 scroll-smooth"
@@ -141,9 +170,19 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
           {messages.map((message, index) => (
             <div
               key={index}
-              className="text-gray-400 bg-light-gray p-3 rounded-[10px]"
+              className={`flex w-full ${
+                message.source === "user" ? "justify-end" : "justify-start"
+              }`}
             >
-              {message}
+              <div
+                className={`max-w-[80%] ${
+                  message.source === "user"
+                    ? "bg-light-gray p-3 rounded-[10px] text-gray-400 text-right"
+                    : "text-white text-left"
+                }`}
+              >
+                {message.content}
+              </div>
             </div>
           ))}
         </div>
@@ -158,6 +197,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         >
           <input
             ref={inputRef}
+            value={textInput}
             onChange={(e) => setTextInput(e.target.value)}
             placeholder="Ask a follow up question"
             className="w-[80%] rounded-[10px] p-[10px] bg-binance-dark focus:outline-none border border-light-gray focus:border-gray"

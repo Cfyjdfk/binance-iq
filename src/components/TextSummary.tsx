@@ -53,15 +53,15 @@ const TextSummary: React.FC<TextSummaryProps> = ({ children }) => {
     try {
       // Save original contents and range for restoration
       highlightedRangeRef.current = range.cloneRange();
-      
+
       // Create a highlight span with only background color
       const highlightSpan = document.createElement("span");
       highlightSpan.style.backgroundColor = "#FCD535";
-      
+
       // Use cloneContents to not disturb the original DOM
       const fragment = range.cloneContents();
       originalStateRef.current = Array.from(fragment.childNodes);
-      
+
       // Apply highlighting
       if (range.commonAncestorContainer.nodeType === Node.TEXT_NODE) {
         // Simple case: text node
@@ -72,7 +72,7 @@ const TextSummary: React.FC<TextSummaryProps> = ({ children }) => {
         // Complex case: multiple nodes
         // Store all ranges that need to be highlighted
         const ranges: Range[] = [];
-        
+
         // Create temporary ranges for each text node
         const treeWalker = document.createTreeWalker(
           range.commonAncestorContainer,
@@ -83,10 +83,10 @@ const TextSummary: React.FC<TextSummaryProps> = ({ children }) => {
                 return NodeFilter.FILTER_ACCEPT;
               }
               return NodeFilter.FILTER_REJECT;
-            }
+            },
           }
         );
-        
+
         let currentNode: Node | null = treeWalker.currentNode;
         while (currentNode) {
           if (range.intersectsNode(currentNode)) {
@@ -96,13 +96,13 @@ const TextSummary: React.FC<TextSummaryProps> = ({ children }) => {
           }
           currentNode = treeWalker.nextNode();
         }
-        
+
         // Apply highlights to each range (in reverse to not invalidate other ranges)
         for (let i = ranges.length - 1; i >= 0; i--) {
           const nodeRange = ranges[i];
           const surround = document.createElement("span");
           surround.style.backgroundColor = "#FCD535";
-          
+
           try {
             nodeRange.surroundContents(surround);
           } catch (e) {
@@ -121,9 +121,11 @@ const TextSummary: React.FC<TextSummaryProps> = ({ children }) => {
   useEffect(() => {
     if (!popupPosition && highlightedRangeRef.current) {
       // Remove all highlight spans we added
-      const highlightSpans = document.querySelectorAll('span[style*="background-color: rgb(252, 213, 53)"]');
-      
-      highlightSpans.forEach(span => {
+      const highlightSpans = document.querySelectorAll(
+        'span[style*="background-color: rgb(252, 213, 53)"]'
+      );
+
+      highlightSpans.forEach((span) => {
         // Preserve the inner content when removing the span
         const parent = span.parentNode;
         if (parent) {
@@ -134,7 +136,7 @@ const TextSummary: React.FC<TextSummaryProps> = ({ children }) => {
           parent.removeChild(span);
         }
       });
-      
+
       // Reset references
       highlightedRangeRef.current = null;
       originalStateRef.current = null;
