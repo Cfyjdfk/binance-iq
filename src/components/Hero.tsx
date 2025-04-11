@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import TextSummary from './TextSummary';
 
 interface CryptoPrice {
@@ -60,6 +61,7 @@ const Hero: React.FC = () => {
     const previousCountRef = useRef(268873677);
     const animationFrameRef = useRef<number | null>(null);
     const animationStartTimeRef = useRef<number | null>(null);
+    const navigate = useNavigate();
 
     // Function to animate the counter
     const animateCounter = (startValue: number, endValue: number, duration: number) => {
@@ -121,137 +123,139 @@ const Hero: React.FC = () => {
     };
 
     return (
-        <div className="bg-binance-dark min-h-screen text-white px-6 py-16">
-            <div className="max-w-7xl mx-auto grid grid-cols-2 gap-12">
-                <div className="space-y-8">
-                    <div>
-                        <h1 className="text-7xl font-bold mb-4 text-[#FCD535]">
-                            {formatNumber(userCount)}
-                        </h1>
-                        <h2 className="text-7xl font-bold text-white">
-                            USERS TRUST US
-                        </h2>
-                    </div>
+        <TextSummary>
+            <div className="bg-binance-dark min-h-screen text-white px-6 py-16">
+                <div className="max-w-7xl mx-auto grid grid-cols-2 gap-12">
+                    <div className="space-y-8">
+                        <div>
+                            <h1 className="text-7xl font-bold mb-4 text-[#FCD535]">
+                                {formatNumber(userCount)}
+                            </h1>
+                            <h2 className="text-7xl font-bold text-white">
+                                USERS TRUST US
+                            </h2>
+                        </div>
 
-                    <div className="max-w-md">
-                        <div className="relative">
-                            <input
-                                type="text"
-                                placeholder="Email/Phone number"
-                                className="w-full px-4 py-3 bg-binance-gray rounded text-white focus:outline-none focus:ring-2 focus:ring-binance-yellow"
-                            />
-                            <button className="absolute right-0 top-0 h-full px-6 bg-binance-yellow text-black rounded-r hover:bg-yellow-400">
-                                Sign Up
-                            </button>
+                        <div className="max-w-md">
+                            <div className="relative">
+                                <input
+                                    type="text"
+                                    placeholder="Email/Phone number"
+                                    className="w-full px-4 py-3 bg-binance-gray rounded text-white focus:outline-none focus:ring-2 focus:ring-binance-yellow"
+                                />
+                                <button className="absolute right-0 top-0 h-full px-6 bg-binance-yellow text-black rounded-r hover:bg-yellow-400">
+                                    Sign Up
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center space-x-4">
+                            <p className="text-gray-400">Or Continue With</p>
+                            <div className="flex space-x-4">
+                                <button className="p-2 bg-binance-gray rounded-full hover:bg-gray-700">
+                                    <img src="/google.svg" alt="Google" className="h-6 w-6" />
+                                </button>
+                                <button className="p-2 bg-binance-gray rounded-full hover:bg-gray-700">
+                                    <img src="/apple.svg" alt="Apple" className="h-6 w-6" />
+                                </button>
+                                <button className="p-2 bg-binance-gray rounded-full hover:bg-gray-700">
+                                    <img src="/qr.svg" alt="QR Code" className="h-6 w-6" />
+                                </button>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="flex items-center space-x-4">
-                        <p className="text-gray-400">Or Continue With</p>
-                        <div className="flex space-x-4">
-                            <button className="p-2 bg-binance-gray rounded-full hover:bg-gray-700">
-                                <img src="/google.svg" alt="Google" className="h-6 w-6" />
-                            </button>
-                            <button className="p-2 bg-binance-gray rounded-full hover:bg-gray-700">
-                                <img src="/apple.svg" alt="Apple" className="h-6 w-6" />
-                            </button>
-                            <button className="p-2 bg-binance-gray rounded-full hover:bg-gray-700">
-                                <img src="/qr.svg" alt="QR Code" className="h-6 w-6" />
+                    <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                            <div className="flex space-x-4">
+                                <button className="text-white font-semibold">Popular</button>
+                                <button className="text-gray-400 hover:text-white">New Listing</button>
+                            </div>
+                            <button className="text-gray-400 hover:text-binance-yellow">
+                                View All 350+ Coins →
                             </button>
                         </div>
-                    </div>
-                </div>
 
-                <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                        <div className="flex space-x-4">
-                            <button className="text-white font-semibold">Popular</button>
-                            <button className="text-gray-400 hover:text-white">New Listing</button>
-                        </div>
-                        <button className="text-gray-400 hover:text-binance-yellow">
-                            View All 350+ Coins →
-                        </button>
-                    </div>
-
-                    {/* Crypto Prices Container */}
-                    <div className="bg-[#1E2026] rounded-lg p-6">
-                        <div className="space-y-4">
-                            {cryptoPrices.map((crypto) => (
-                                <div key={crypto.symbol} className="flex items-center justify-between p-4 bg-binance-gray rounded hover:bg-gray-700 cursor-pointer">
-                                    <div className="flex items-center space-x-4">
-                                        <img src={crypto.icon} alt={crypto.name} className="h-8 w-8" />
-                                        <div>
-                                            <span className="font-medium">{crypto.symbol}</span>
-                                            <span className="text-gray-400 ml-2">{crypto.name}</span>
+                        {/* Crypto Prices Container */}
+                        <div className="bg-[#1E2026] rounded-lg p-6">
+                            <div className="space-y-4">
+                                {cryptoPrices.map((crypto) => (
+                                    <div key={crypto.symbol} className="flex items-center justify-between p-4 bg-binance-gray rounded hover:bg-gray-700 cursor-pointer">
+                                        <div className="flex items-center space-x-4">
+                                            <img src={crypto.icon} alt={crypto.name} className="h-8 w-8" />
+                                            <div>
+                                                <span className="font-medium">{crypto.symbol}</span>
+                                                <span className="text-gray-400 ml-2">{crypto.name}</span>
+                                            </div>
+                                        </div>
+                                        <div className="text-right">
+                                            <div className="font-medium">{crypto.price}</div>
+                                            <div className={crypto.change.startsWith('-') ? 'text-red-500' : 'text-green-500'}>
+                                                {crypto.change}
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="text-right">
-                                        <div className="font-medium">{crypto.price}</div>
-                                        <div className={crypto.change.startsWith('-') ? 'text-red-500' : 'text-green-500'}>
-                                            {crypto.change}
-                                        </div>
-                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* News Container */}
+                        <div className="bg-[#1E2026] rounded-lg p-6">
+                            <div className="flex items-center justify-between mb-4">
+                                <h3 className="text-xl font-semibold">News</h3>
+                                <button className="text-gray-400 hover:text-binance-yellow">
+                                    View All News →
+                                </button>
+                            </div>
+                            <div className="space-y-4">
+                                {newsItems.map((news, index) => (
+                                    <a
+                                        key={index}
+                                        href={news.link}
+                                        className="block text-gray-300 hover:text-white truncate"
+                                    >
+                                        {news.title}
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Launchpool Container */}
+                        <div className="bg-[#1E2026] rounded-lg p-6 cursor-pointer" onClick={() => navigate('/launchpool')}>
+                            <div className="flex items-center justify-between mb-4">
+                                <div className="flex items-center space-x-2">
+                                    <h3 className="text-xl font-semibold">Launchpool</h3>
+                                    <img src="/wct.svg" alt="WCT" className="h-6 w-6" />
+                                    <span className="text-sm font-medium">WCT</span>
+                                    <span className="text-xs px-2 py-0.5 bg-green-600 text-white rounded">Ongoing</span>
                                 </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* News Container */}
-                    <div className="bg-[#1E2026] rounded-lg p-6">
-                        <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-xl font-semibold">News</h3>
-                            <button className="text-gray-400 hover:text-binance-yellow">
-                                View All News →
-                            </button>
-                        </div>
-                        <div className="space-y-4">
-                            {newsItems.map((news, index) => (
-                                <a
-                                    key={index}
-                                    href={news.link}
-                                    className="block text-gray-300 hover:text-white truncate"
-                                >
-                                    {news.title}
-                                </a>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Launchpool Container */}
-                    <div className="bg-[#1E2026] rounded-lg p-6">
-                        <div className="flex items-center justify-between mb-4">
-                            <div className="flex items-center space-x-2">
-                                <h3 className="text-xl font-semibold">Launchpool</h3>
-                                <img src="/wct.svg" alt="WCT" className="h-6 w-6" />
-                                <span className="text-sm font-medium">WCT</span>
-                                <span className="text-xs px-2 py-0.5 bg-green-600 text-white rounded">Ongoing</span>
+                                <button className="text-gray-400 hover:text-binance-yellow">
+                                    →
+                                </button>
                             </div>
-                            <button className="text-gray-400 hover:text-binance-yellow">
-                                →
-                            </button>
-                        </div>
-                        <div className="flex space-x-4">
-                            <div className="text-center">
-                                <div className="text-2xl font-bold">03</div>
-                                <div className="text-xs text-gray-400">D</div>
-                            </div>
-                            <div className="text-center">
-                                <div className="text-2xl font-bold">19</div>
-                                <div className="text-xs text-gray-400">H</div>
-                            </div>
-                            <div className="text-center">
-                                <div className="text-2xl font-bold">48</div>
-                                <div className="text-xs text-gray-400">M</div>
-                            </div>
-                            <div className="text-center">
-                                <div className="text-2xl font-bold">32</div>
-                                <div className="text-xs text-gray-400">S</div>
+                            <div className="flex space-x-4">
+                                <div className="text-center">
+                                    <div className="text-2xl font-bold">03</div>
+                                    <div className="text-xs text-gray-400">D</div>
+                                </div>
+                                <div className="text-center">
+                                    <div className="text-2xl font-bold">19</div>
+                                    <div className="text-xs text-gray-400">H</div>
+                                </div>
+                                <div className="text-center">
+                                    <div className="text-2xl font-bold">48</div>
+                                    <div className="text-xs text-gray-400">M</div>
+                                </div>
+                                <div className="text-center">
+                                    <div className="text-2xl font-bold">32</div>
+                                    <div className="text-xs text-gray-400">S</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </TextSummary>
     );
 };
 
