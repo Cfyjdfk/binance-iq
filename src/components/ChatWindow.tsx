@@ -93,7 +93,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
   const handleSendMessage = () => {
     if (!textInput.trim()) return;
-    
+
     // Add user message
     setMessages((prev) => [
       ...prev,
@@ -102,20 +102,20 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         content: textInput,
       }
     ]);
-    
+
     // Store the text input before clearing it
     const userMessage = textInput;
-    
+
     // Clear input field
     setTextInput("");
-    
+
     // Simulate agent response with a slight delay to avoid UI jank
     setTimeout(() => {
       setMessages((prevMessages) => [
         ...prevMessages,
         {
           source: "agent",
-          content: `This is a test response to: "${userMessage}"`,
+          content: `WalletConnect (WCT), the 67th project on Binance Launchpool, is an open-source protocol that securely connects users to decentralized applications across various blockchains; its native token, WCT, facilitates staking, governance, and future fee-sharing within the network.`,
         }
       ]);
     }, 500);
@@ -170,16 +170,14 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
           {messages.map((message, index) => (
             <div
               key={index}
-              className={`flex w-full ${
-                message.source === "user" ? "justify-end" : "justify-start"
-              }`}
+              className={`flex w-full ${message.source === "user" ? "justify-end" : "justify-start"
+                }`}
             >
               <div
-                className={`max-w-[80%] ${
-                  message.source === "user"
-                    ? "bg-light-gray p-3 rounded-[10px] text-gray-400 text-right"
-                    : "text-white text-left"
-                }`}
+                className={`max-w-[80%] ${message.source === "user"
+                  ? "bg-light-gray p-3 rounded-[10px] text-gray-400 text-right"
+                  : "text-white text-left"
+                  }`}
               >
                 {message.content}
               </div>
