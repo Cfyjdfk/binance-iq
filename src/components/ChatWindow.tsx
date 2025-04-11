@@ -175,8 +175,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             >
               <div
                 className={`max-w-[80%] ${message.source === "user"
-                    ? "bg-light-gray p-3 rounded-[10px] text-gray-400 text-right"
-                    : "text-white text-left"
+                  ? "bg-light-gray p-3 rounded-[10px] text-gray-400 text-right"
+                  : "text-white text-left"
                   }`}
               >
                 {message.content}
