@@ -14,7 +14,7 @@ import {
 const Resources: React.FC = () => {
     return (
         <div className="bg-binance-dark text-white py-16 px-6">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
                 {/* Community Section */}
                 <div className="lg:col-span-1">
                     <h3 className="text-xl font-semibold mb-6">Community</h3>
