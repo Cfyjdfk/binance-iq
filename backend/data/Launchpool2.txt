@@ -1,0 +1,175 @@
+
+Buy Crypto
+Markets
+Trade
+Futures
+Earn
+Square
+More
+
+
+Binance Blog
+Binance Launchpool: A Gateway to Exclusive Projects and Token Rewards
+2025-03-21
+Main Takeaways
+Dive into the evolution and success of the Binance Launchpool program and get to know this high-yield, low-risk opportunity to earn more from your digital asset holdings. 
+
+Understand why and how Binance Launchpool is different from direct token sale models. 
+
+Last year, Binance Launchpool delivered incredible value to users, with cumulative rewards surpassing $1.75 billion. 
+
+
+In recent years, Binance Launchpool has emerged as one of the most compelling avenues for crypto users to gain early access to new blockchain projects. By staking their assets, users can receive tokens from new projects even before they are listed on Binance, which makes the program a low-risk way to earn new cryptocurrencies that often have strong growth potential. Since its inception in September 2020, the program has played an important role in incubating and accelerating blockchain innovations while giving Binance users privileged access to carefully selected projects that often go on to shape the industry.
+
+Whether you are a new or seasoned crypto and Binance user, read this article to learn more about Binance Launchpool program and how it can drive value for you.
+
+Binance Launchpool Over the Years
+Binance Launchpool was introduced in September 2020 as an innovative way to democratize access to new cryptocurrency projects. At the time, initial coin offerings (ICOs) had lost credibility due to the 2017-2018 boom and subsequent bust, where many investors suffered losses from unsustainable projects. Binance recognized the need for a safer and more structured way for users to gain early exposure to new tokens while providing blockchain startups with a robust platform to launch and scale.
+
+In its early days, Launchpool was designed as an alternative to direct token sales. Instead of requiring users to purchase tokens upfront, Binance allowed them to stake their existing assets such as BNB to “farm” new tokens over a specific period. This model introduced a mechanism where users could earn rewards, denominated in new tokens, without needing to make a speculative investment. This model quickly gained traction, providing both liquidity for new projects and low-risk earnings for participants.
+
+Compared to traditional fundraising methods like ICOs and initial DEX offerings (IDOs), Binance Launchpool offers a more user-friendly and risk-mitigated approach. ICOs typically require investors to commit funds upfront, often without guarantees on token liquidity or long-term viability. IDOs, while offering decentralized launch mechanisms, still involve financial risk for participants who buy tokens before a proven market exists.
+
+Launchpool, in contrast, eliminates these risks by allowing users to farm tokens using their existing holdings. This means that participants never pay out of pocket for new assets they acquire, making it a low-risk, high-reward opportunity. Additionally, Binance’s commitment to security and trust ensures that all listed projects undergo thorough due diligence before being introduced to the platform.
+
+By 2022, Binance had refined the program with more structured staking mechanics and reward distributions. We introduced tiered staking pools, allowing users to commit varying amounts of assets to maximize their returns. By 2023, Binance Launchpool had distributed $370 million in token rewards, proving its effectiveness in engaging users and incubating successful projects. However, the real turning point came in 2024, when the program saw unprecedented growth. In just one year, Binance Launchpool issued over $1.75 billion in token rewards, an almost fivefold increase from the previous year. This explosive growth signaled the increasing demand for Launchpool opportunities and Binance’s continued dominance in token distribution.
+
+Why Participate in Binance Launchpool?
+For users, the appeal of Launchpool lies in its accessibility and reward potential. By staking assets, participants earn new tokens without any direct financial outlay beyond locking their existing holdings. This means that even in cases where the new token’s price fluctuates post-listing, users still gain from their participation.
+
+Launchpool also provides privileged access to high-quality projects that undergo a rigorous selection process before being listed on Binance. This ensures that only highly promising and well-vetted projects make it to the farming pools. The ability to trade tokens immediately upon listing further enhances liquidity, making it easy for participants to realize their gains or hold for potential future appreciation.
+
+Binance Launchpool’s impact extends beyond centralized staking, reaching into the DeFi space with the integration of DeFi BNB Assets. This expansion allows users to stake their BNB in decentralized protocols while still participating in Launchpool rewards, effectively unlocking additional yield on their assets. By enabling DeFi BNB participation, Binance provides BNB holders with more flexible earning opportunities, allowing them to generate rewards across both centralized and decentralized platforms simultaneously.
+
+Binance Launchpool’s Record Year in 2024
+The numbers from 2024 highlight the sheer scale of Launchpool’s impact. With total token rewards surpassing $1.75 billion, the program has become an important driver of user engagement within the Binance ecosystem. Compared to 2023’s $370 million in rewards, this growth represents a massive fivefold increase.
+
+Among the standout projects of 2024, three Launchpools stood out for their exceptional reward distributions. Saga (SAGA), Ethena (ENA), and PIXEL each issued over $150 million in rewards, making them the largest token distributions of the year. These projects attracted significant staking participation, highlighting strong user interest and engagement. The locked BNB for these pools reached substantial figures, each seeing more than ten million BNB of locked value, thus reflecting the Binance community’s interest and excitement over these tokens.
+
+A Closer Look at Launchpool’s Token Performance
+While the reward potential of Launchpool is clear, market performance post-listing is another crucial aspect to consider. The data from 2024 illustrates a mixed trend. Out of the 60 new token listings featured on Launchpool, only 19 managed to sustain or increase their market cap by the end of the year, while the majority, 41 projects, experienced declines. These fluctuations reflected the broader crypto market’s fluctuations during this period. 
+
+The average post-listing decline of $100 million in market cap underscores the volatility inherent in the crypto market, as well as the fact that even robust and sustainable assets are not guaranteed a sustained stellar price performance right out of the gate.
+
+For some projects, initial excitement led to sharp price surges, only for prices to correct over time. Others struggled with liquidity and adoption, leading to downward pressure on their valuation over time. However, for users farming tokens via Launchpool, these fluctuations did not equate to losses, as they acquired their tokens via staking rather than direct purchases.
+
+Looking at the three standout Launchpool projects of 2024, Saga (SAGA) delivered the highest return for participants. The project distributed 36 million SAGA tokens as rewards, and each staked BNB earned users approximately 1.99 SAGA tokens. On its first trading day, the token closed at $6.56, meaning participants who farmed SAGA through Launchpool saw an estimated return of $13.07 per BNB staked, making it the most rewarding pool of the year. The significant appreciation of SAGA after listing contributed to its strong performance, rewarding early farmers handsomely.
+
+Ethena (ETHENA) also ranked among the best-performing Launchpools, distributing 240 million ETHENA tokens in total rewards. Users who staked in this pool received an average of 13.35 ETHENA tokens per BNB, and with a first-day closing price of $0.777, the estimated return per BNB was $10.37. While ETHENA’s price was lower compared to SAGA, the higher distribution per staked BNB ensured substantial earnings for participants.
+
+PIXEL, another top performer, issued 280 million tokens in rewards. With an average 17.26 PIXEL per BNB staked, and a day-one close price of $0.5489, the estimated return for participants was $9.47 per BNB. Despite PIXEL having a lower token price than the other top performers, its generous distribution made it one of the most lucrative pools of the year.
+
+While many projects delivered strong rewards, not all Launchpool tokens delivered strong performance. The disparity in returns among different projects highlights the importance of research and diversification when participating in Launchpool. Understanding token supply, listing price trends, and project fundamentals can help participants make informed decisions about which pools to prioritize.
+
+How Binance Launchpool Benefits BNB Holders
+Binance Launchpool has played a key role in supporting the price stability and long-term value of BNB, the utility token of the BNB Chain ecosystem that powers the Binance Launchpool program.
+
+In 2024, BNB’s price more than doubled from around $317 at the start of the year to $700 by year-end. A major reason behind BNB’s resilience is the continuous demand created by Launchpool, which incentivizes users to stake rather than sell. By locking up BNB to farm new tokens, participants reduce market supply, helping to sustain price levels even in volatile market conditions.
+
+Beyond price stability, Launchpool enhances the utility of BNB by offering predictable rewards to holders. Instead of relying on speculation, users can earn new tokens through staking, ensuring a steady stream of returns while maintaining exposure to a historically stable asset. This combination of yield-generation and price support makes BNB one of the strongest assets in the market, reinforcing its role as the backbone of the BNB Chain ecosystem.
+
+Getting Started with Binance Launchpool
+For those new to the program, participating in Binance Launchpool is a straightforward process. Users need to create a Binance account and complete basic verification steps before they can stake assets in active pools.
+
+Once staked, rewards are distributed daily based on each participant’s contribution to the pool. This means that the more an individual stakes, the higher their share of the rewards. Tokens earned through Launchpool can be held for long-term appreciation or traded immediately upon listing, giving participants flexibility in managing their earnings.
+
+For anyone looking to expand their crypto portfolio while minimizing risk, Binance Launchpool presents an unmatched opportunity. There is never a better time than today to get involved and start farming your rewards! Sign up now for a Binance account. 
+
+Further Reading
+Master the Airdrop Game: More Than Just Free Money
+
+How to Earn Interest and Get Airdrops at the Same Time! 
+
+How to Make Your Crypto Work for You with Binance Earn (2025 Guide)
+
+Disclaimer: Digital asset prices are subject to high market risk and price volatility. The value of your investment may go down or up, and you may not get back the amount invested. You are solely responsible for your investment decisions and Binance is not liable for any losses you may incur. Past performance is not a reliable predictor of future performance. You should only invest in products you are familiar with and where you understand the risks. You should carefully consider your investment experience, financial situation, investment objectives and risk tolerance and consult an independent financial adviser prior to making any investment. This material should not be construed as financial advice. For more information, see our Terms of Use and Risk Warning.
+
+Share Post
+475
+268,899,771 users chose us. Find out why today.
+Binance Launchpool: A Gateway to Exclusive Projects and Token Rewards
+Main Takeaways
+Binance Launchpool Over the Years
+Why Participate in Binance Launchpool?
+Binance Launchpool’s Record Year in 2024
+A Closer Look at Launchpool’s Token Performance
+How Binance Launchpool Benefits BNB Holders
+Getting Started with Binance Launchpool
+Further Reading
+268,899,771 users chose us. Find out why today.
+Community
+English
+USD-$
+Theme
+About Us
+About
+Careers
+Announcements
+News
+Press
+Legal
+Terms
+Privacy
+Building Trust
+Blog
+Community
+Risk Warning
+Notices
+Downloads
+Desktop Application
+Products
+Exchange
+Buy Crypto
+Pay
+Academy
+Live
+Tax
+Gift Card
+Launchpool
+Auto-Invest
+ETH Staking
+NFT
+BABT
+Research
+Charity
+Business
+P2P Merchant Application
+P2Pro Merchant Application
+Listing Application
+Institutional & VIP Services
+Labs
+Binance Connect
+Learn
+Learn & Earn
+Browse Crypto Prices
+Bitcoin Price
+Ethereum Price
+Browse Crypto Price Predictions
+Bitcoin Price Prediction
+Ethereum Price Prediction
+Ethereum Upgrade (Pectra)
+Buy Bitcoin
+Buy BNB
+Buy XRP
+Buy Dogecoin
+Buy Ethereum
+Buy Tradable Altcoins
+Service
+Affiliate
+Referral
+BNB
+OTC Trading
+Historical Market Data
+Trading Insight
+Proof of Reserves
+Support
+24/7 Chat Support
+Support Center
+Product Feedback & Suggestions
+Fees
+APIs
+Binance Verify
+Trading Rules
+Binance Airdrop Portal
+Law Enforcement Requests
+Binance© 2025Cookie Preferences

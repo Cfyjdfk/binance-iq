@@ -1,0 +1,159 @@
+Learn
+Topics
+CMC Updates
+Glossary
+Authors
+
+
+Binance Launchpad vs Binance Launchpool: Key Differences
+Table of Contents
+Crypto Basics
+Binance Launchpad vs Binance Launchpool: Key Differences
+By Will Kendall
+8m
+Created 2yr ago, last updated 2yr ago
+CoinMarketCap Academy takes a deep dive into two of the most popular Binance tools - Launchpool and Launchpad. Read more to find out what benefits these tools offer to users!
+
+
+Binance Launchpad vs Binance Launchpool: Key Differences
+Table of Contents
+The Short Version
+The Long Version
+What Is Binance Launchpad?
+How Does Launchpad Work?
+Why Do Crypto Startups Want to Work With Launchpad?
+Are Launchpad Projects Successful?
+What Does Binance Look for in Launchpad Projects?
+How to Use Binance Launchpad as an Investor
+What Is Binance Launchpool?
+How Do Launchpool Rewards Work?
+How Can You Use Launchpool?
+Why Do Crypto Projects Want to Work With Launchpool?
+Don't have time to read? Check our video instead! ⬇️
+
+Binance has dozens of tools and services that can help grow your crypto portfolio. Two of the most popular are Launchpad and Launchpool.
+
+These similarly-named services are often mixed up with one another, which is why we have put together this guide to explain what Launchpad and Launchpool are, how they are alike, and where they differ.
+
+Before we dive into a deeper description, here’s a quick explanation of Launchpad and Launchpool for those of you who want a quick answer.
+
+Subscribe
+Join us in showcasing the cryptocurrency revolution, one newsletter at a time. Subscribe now to get daily news and market updates right to your inbox, along with our millions of other subscribers (that’s right, millions love us!) — what are you waiting for?
+
+The Short Version
+
+Binance Launchpad is an initial exchange offering (IEO) platform. Through Launchpad, you can earn rewards (in the form of tokens) by fundraising new and exciting projects, all of which are hand-chosen and vetted by Binance. The number of tokens you can earn depends on how much crypto was committed overall, and your rewards will be capped.
+Binance Launchpool, on the other hand, is essentially an exchange-based liquidity farming service. Through Launchpool, you can earn passive revenue by staking your crypto in exchange for tokens from new crypto projects. When the staking period is over, you get your initial investment back along with any reward tokens.
+In many ways, Launchpad and Launchpool are similar. Both services are provided by Binance and drive support and awareness for promising crypto startups. Both offer early access to quick and easy revenue-yielding services to Binance account holders. And both support the projects they help launch through media and marketing advice, as well as fundraising assistance.
+
+But they are of course different in many ways as well. Launchpad involves investing in projects before they launch, which somehow mimics a traditional stock IPO. Meanwhile, Launchpool requires you to stake tokens to earn new ones, which comparatively is a more passive way to grow your crypto portfolio.
+
+That concludes our brief overview of how Launchpad and Launchpool differ. Now, we are going to explore Binance’s two services in detail.
+
+The Long Version
+What Is Binance Launchpad?
+Binance Launchpad is the world’s first Initial Exchange Offerings (IEOs) platform. If you aren’t familiar with the term, IEOs are where crypto startups raise capital by selling their native tokens to grow their platforms through an exchange, like Binance.
+
+During the pre-Launchpad era, most crypto projects raised funds through initial coin offerings, or ICOs, which were comparatively unsafe and besieged by scams and fraudulent behavior.
+How Does Launchpad Work?
+Launchpad gives you a first look at dozens of promising new crypto ventures, all of which are hand-picked by Binance. What’s more, investing through Launchpad is simple, easy, and safe.
+
+When you invest in a crypto project through Launchpad, you need to lock up some crypto for a set time, usually seven days. During this window, you cannot withdraw these tokens. Once the period is up, Binance lists the project’s tokens on its spot market, and you can freely trade your new tokens.
+During the first few Launchpad IEOs back in 2019, investors could buy up as much of a Launchpad project’s token allocation as they wanted. This inevitably led to whales buying up all of the tokens and squeezing out smaller investors. Had this continued, one or two wealthy individuals could have had controlling stakes in some major crypto projects, damaging their claims to operate in a decentralized way.
+
+To rectify this, Binance introduced a lottery system to democratize the token-buying process. Its mechanism lets you claim up to five lottery tickets based on a snapshot of your BNB token holdings over the previous twenty days. Obviously, the more BNB tokens you hold, the more lottery tickets you can claim, and the more tokens you can earn from the IEO.
+
+To claim your lottery tickets, you’ll need to commit some crypto to a holding period, as discussed above. Once the time ends, a “claim tickets” button appears for a 24-hour period, during which you can confirm them. The lottery then takes place, and the winners automatically participate in the Launchpad IEO event.
+
+Once the IEO ends, Binance will automatically distribute your newly accrued tokens. The number of coins you can earn depends on two factors: how many lottery tickets you claimed, and the total amount of crypto invested by all the investors through the IEO. Again, the more money you invest, the more tokens you will earn.
+
+Speaking of success stories, Launchpad has provided investors with some visible returns in the three years it’s been up and running. Lottery tickets for Axie Infinity, for instance, were at one point worth an astonishing $250,000, according to Yahoo.
+Why Do Crypto Startups Want to Work With Launchpad?
+Launchpad gives new crypto companies a wealth of benefits and advantages they wouldn’t otherwise have. For instance, easy access to Binance’s community of investors.
+
+Another benefit is an easier marketing strategy. As readers who use Binance will know, whenever the exchange works with a new project (especially the Launchpad ones), its media and marketing materials will be advertised all over Binance’s website and social media accounts.
+
+Additionally, once a project officially launches, its token is listed on Binance’s spot market with multiple trading pairs, which can provide some much-needed daily trading volume.
+
+And let’s not forget that those projects who work with Launchpool are checked and verified by Binance, which lends them some serious credibility in the wider crypto community.
+
+Are Launchpad Projects Successful?
+In short, yes. Launchpad alumni are a remarkably successful bunch. So far, Launchpad has raised funds and rolled out more than sixty crypto projects since 2019. Those tokens have since accrued billions of US dollars in value.
+
+For instance, there’s Polygon (MATIC): its value has soared nearly 10,000% since its launch and its market cap is $3.2 billion at the time of writing. There’s also Axie Infinity (AXS), one of the biggest success stories from the previous bull market, whose token currently has a market cap of more than $1 billion. And who could forget BitTorrent (BTT), whose launch saw 50 billion BTT tokens sold in under 15 minutes?
+These are some of the better-known and most successful Launchpad graduates, but several  recent launches have enjoyed remarkable success as well. For instance, STEPN, a move-to-earn fitness app, got underway with help from Launchpad in March 2022. Its token surged more than 450% by late June 2022.
+Another successful launch was League of Kingdoms, a blockchain MMO game where you can build your own kingdom and army, make alliances with other players, and take over other players’ NFT-based lands. Its token LOKA doubled in price by April, however, is now facing a correction, same as other altcoins.
+What Does Binance Look for in Launchpad Projects?
+The Launchpad team will not accept any old crypto projects, especially those only hoping to make a quick buck. Project teams who want to launch their new company through Launchpad have to meet certain requirements.
+
+They must have, for example, finished business and token economics models which they can present to the Launchpad team. They also need to provide a brief history of their development team, including their experience and qualifications. And finally, their project must be in a mature stage, suitable for large-scale adoption, and have the potential to benefit the wider crypto community.
+
+To apply to Binance Launchpad, read more about the requirements, or fill out an application, just follow this link.
+How to Use Binance Launchpad as an Investor
+To use Binance Launchpad, you first need to sign up for a Binance account and pass some KYC and identity verification checks.
+
+Once that’s out of the way, you then log in, click the menu icon in the top left of the taskbar, and select “Launchpad” from the drop-down menu.
+
+Your browser will then bring up a page showing all the active and finished Launchpad projects. You are now free to read about and partake in whichever Launchpad promotion you want.
+
+What Is Binance Launchpool?
+Launchpool combines the security and convenience of managing your crypto assets through a centralized exchange with DeFi’s returns. It allows you to earn passive revenue from your cryptocurrency portfolio.
+Launchpool got underway during the height of the so-called DeFi mania toward the end of 2020. The hype was partly driven by what’s called yield farming. It involves supplying crypto to a liquidity pool, through which other people can exchange different cryptocurrencies without an intermediary.
+As a reward for supplying liquidity to a pool, you earn interest. This process, in short, describes what Binance Launchpool really is: a centralized yield farming service.
+
+Yield farming through Launchpool works similarly to other providers. You earn new tokens by staking your current holdings for a specified period, usually 30 days. And while Launchpool doesn’t cap the number of tokens you can stake, the minimum amount is 0.1 of whatever token you are staking.
+
+How Do Launchpool Rewards Work?
+Launchpool calculates new rewards every hour from the moment you stake your tokens. The quantity of tokens you accumulate varies by how much crypto you stake, the advertised return (APR), and the total quantity of crypto committed to the pool by you and all the other investors.
+Following the first seven days of a new project’s farming period, Binance lists its token on the spot market. At this point you and all the other investors can trade your accrued tokens. From this point on, you can add to your investment, withdraw your tokens, or trade your rewards whenever you want.
+
+How Can You Use Launchpool?
+To earn some cash from farming through Binance Launchpool, you need a Binance account. Once you have an account, you need to log in and then head over to the Launchpool page. From there, select the pool you want to stake in, type in however many tokens you want to commit, and then click “Stake.” That’s it!
+
+You don’t need to meet any stringent criteria to farm through Launchpool. But you do need at least 0.1 of whichever token you want to farm. If you decide to use BNB tokens, those will still count towards your Launchpad lottery ticket requirements, and upcoming airdrops, and will still help you to accrue other VIP benefits.
+
+If you want to see which projects you can farm from today, head over to Binance’s Launchpad page here.
+Why Do Crypto Projects Want to Work With Launchpool?
+Similar to Binance Launchpad, the projects that feature on Launchpool have Binance’s full support.
+
+This includes advisory services, marketing assistance, and access to Binance’s enormous community of investors. Upon a Launchpool project’s token launch, Binance creates multiple trading pairs for its spot market, which allows every Binance account holder to trade the project’s tokens.
+
+Just like Launchpad, Launchpool boasts dozens of success stories. During the six months following Launchpool’s rollout in September 2020, 15 projects locked nearly $5 billion in value and distributed $529 million in tokens to more than 400,000 Binance investors.
+The CEOs and founders of projects that graduated from Launchpool have returned mostly positive feedback about their experiences working with Binance.
+
+Reed CEO Denko Mancheski remarked that thanks to Launchpool, “the growth and adoption that we experienced are on an unparalleled scale”.
+
+Similarly, Litentry CEO Hanwen Cheng says that support provided by Launchpool was “unprecedented,” and that his company “unlocked great value that goes beyond traditional bootstrap, and… saw the profound, invisible, long-term impact that the BSC ecosystem has on us.”
+
+This article contains links to third-party websites or other content for information purposes only (“Third-Party Sites”). The Third-Party Sites are not under the control of CoinMarketCap, and CoinMarketCap is not responsible for the content of any Third-Party Site, including without limitation any link contained in a Third-Party Site, or any changes or updates to a Third-Party Site. CoinMarketCap is providing these links to you only as a convenience, and the inclusion of any link does not imply endorsement, approval or recommendation by CoinMarketCap of the site or any association with its operators. This article is intended to be used and must be used for informational purposes only. It is important to do your own research and analysis before making any material decisions related to any of the products or services described. This article is not intended as, and shall not be construed as, financial advice. The views and opinions expressed in this article are the author’s [company’s] own and do not necessarily reflect those of CoinMarketCap. CoinMarketCap is not responsible for the success or authenticity of any project, we aim to act as a neutral informational resource for end-users.
+3 people liked this article
+
+Will Kendall
+Will Kendall
+I’m a UK-based writer covering cryptocurrency and technology.
+
+Related Articles
+Crypto Basics
+CMC Market Pulse: Reverse the Dip, or Not?
+CMC Market Pulse delivers actionable market insights, giving you all the key narratives and developments you need in under 5 minutes.
+By CMC Research
+4h ago
+7m
+Crypto Basics
+Week in Memes: Trump Says Ape Now, Conor McGregor Coin KO’d
+The meme coin market bounced 16% off the lows.
+By Werner Vermaak
+17h ago
+4m
+Crypto Basics
+Week in RWA: Top RWA Tokens Thrashed on Tariff Turmoil
+RWA tokens hit hard: Sector loses $5B in mcap with 90% of tokens in decline, though a few like GRPO and EPIC outperform.
+By Daniel Phillips
+1d ago
+4m
+See all articles
+Join the thousands already learning crypto!
+
+Join our free newsletter for daily crypto updates!
+Subscribe
+©2025 CoinMarketCap
