@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface CryptoPrice {
     symbol: string;
@@ -55,13 +55,77 @@ const newsItems = [
 ];
 
 const Hero: React.FC = () => {
+    const [userCount, setUserCount] = useState(268873677);
+    const previousCountRef = useRef(268873677);
+    const animationFrameRef = useRef<number | null>(null);
+    const animationStartTimeRef = useRef<number | null>(null);
+
+    // Function to animate the counter
+    const animateCounter = (startValue: number, endValue: number, duration: number) => {
+        const animationStep = (timestamp: number) => {
+            if (!animationStartTimeRef.current) {
+                animationStartTimeRef.current = timestamp;
+            }
+
+            const elapsed = timestamp - animationStartTimeRef.current;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Easing function for smoother animation
+            const easeOutQuad = (t: number) => t * (2 - t);
+            const easedProgress = easeOutQuad(progress);
+            
+            const currentValue = Math.floor(startValue + (endValue - startValue) * easedProgress);
+            setUserCount(currentValue);
+
+            if (progress < 1) {
+                animationFrameRef.current = requestAnimationFrame(animationStep);
+            } else {
+                animationStartTimeRef.current = null;
+            }
+        };
+
+        if (animationFrameRef.current) {
+            cancelAnimationFrame(animationFrameRef.current);
+        }
+        
+        animationFrameRef.current = requestAnimationFrame(animationStep);
+    };
+
+    useEffect(() => {
+        // Function to update the counter with a random increment
+        const updateCounter = () => {
+            const randomIncrement = Math.floor(Math.random() * 3) + 3; // Random number between 3-5
+            const newCount = userCount + randomIncrement;
+            
+            // Animate from previous to new value
+            animateCounter(previousCountRef.current, newCount, 1200); // 800ms animation
+            previousCountRef.current = newCount;
+        };
+
+        // Set up the interval with random timing between 5-10 seconds
+        const randomDelay = Math.floor(Math.random() * 2000) + 2000; // 5000-10000ms
+        const intervalId = setInterval(updateCounter, randomDelay);
+
+        return () => {
+            clearInterval(intervalId);
+            if (animationFrameRef.current) {
+                cancelAnimationFrame(animationFrameRef.current);
+            }
+        };
+    }, [userCount]);
+
+    // Function to format the number with commas
+    const formatNumber = (num: number): string => {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+
     return (
         <div className="bg-binance-dark min-h-screen text-white px-6 py-16">
             <div className="max-w-7xl mx-auto grid grid-cols-2 gap-12">
                 <div className="space-y-8">
                     <div>
                         <h1 className="text-7xl font-bold mb-4 text-[#FCD535]">
-                            268,873,677
+                            {formatNumber(userCount)}
                         </h1>
                         <h2 className="text-7xl font-bold text-white">
                             USERS TRUST US
