@@ -186,7 +186,7 @@ const TextSummary: React.FC<TextSummaryProps> = ({ children }) => {
             boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
           }}
         >
-          <span className="font-medium">⌘K / Ctrl+K</span>
+          <span className="font-medium">⌘K / Ctrl+K to learn more</span>
           <div className="absolute w-2 h-2 bg-binance-gray rotate-45 left-1/2 -bottom-1 -ml-1"></div>
         </div>
       )}

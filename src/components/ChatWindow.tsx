@@ -11,6 +11,17 @@ interface Message {
   content: string;
 }
 
+interface ChatWindowStyle extends React.CSSProperties {
+  top?: string;
+  bottom?: string;
+  width: string;
+  height: string;
+  boxShadow: string;
+  left?: string;
+  right?: string;
+  transform?: string;
+}
+
 const summaryDictionary: Record<string, string> = {
   Launchpool:
     "A platform where users stake crypto to earn new tokens before listing",
@@ -31,13 +42,29 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
   const [offsetPosition, setOffsetPosition] = useState(position);
   const [messages, setMessages] = useState<Message[]>([]);
   const [textInput, setTextInput] = useState("");
+  const [alignRight, setAlignRight] = useState(false);
+  const [alignBottom, setAlignBottom] = useState(false);
 
   // Update position when scrolling to keep anchored to selection
   useEffect(() => {
     if (!position) return;
 
-    const handleScroll = () => {
+    const handlePositioning = () => {
       if (position) {
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+        const chatWindowWidth = 400; // Width of our chat window
+        const chatWindowHeight = messages.length > 0 ? 400 : 250; // Height of our chat window
+        const minMargin = 20; // Minimum margin from edge
+        
+        // Check if there's enough space on the right
+        const willOverflowRight = position.x + chatWindowWidth + minMargin > windowWidth;
+        
+        // Check if there's enough space at the top (when using transform: translateY(-100%))
+        const willOverflowTop = position.y - chatWindowHeight - minMargin < 0;
+        
+        setAlignRight(willOverflowRight);
+        setAlignBottom(willOverflowTop);
         setOffsetPosition({
           x: position.x,
           y: position.y,
@@ -46,12 +73,17 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     };
 
     // Set initial position
-    handleScroll();
+    handlePositioning();
 
-    // Listen for scroll events
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [position]);
+    // Listen for scroll and resize events
+    window.addEventListener("scroll", handlePositioning);
+    window.addEventListener("resize", handlePositioning);
+    
+    return () => {
+      window.removeEventListener("scroll", handlePositioning);
+      window.removeEventListener("resize", handlePositioning);
+    };
+  }, [position, messages.length]);
 
   useEffect(() => {
     // Handler for clicks anywhere in the document
@@ -91,25 +123,24 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     }
   }, [position]); // Focus when chat window opens (position changes from null)
 
-  const handleSendMessage = () => {
-    if (!textInput.trim()) return;
+  const handleSendMessage = (overrideText?: string) => {
+    const messageToSend = overrideText || textInput;
+    
+    if (!messageToSend.trim()) return;
 
     // Add user message
     setMessages((prev) => [
       ...prev,
       {
         source: "user",
-        content: textInput,
+        content: messageToSend,
       }
     ]);
-
-    // Store the text input before clearing it
-    const userMessage = textInput;
 
     // Clear input field
     setTextInput("");
 
-    // Simulate agent response with a slight delay to avoid UI jank
+    // Simulate agent response with a slight delay
     setTimeout(() => {
       setMessages((prevMessages) => [
         ...prevMessages,
@@ -123,20 +154,38 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
   if (!position || !offsetPosition) return null;
 
+  // Create the style object with proper typing
+  const style: ChatWindowStyle = {
+    width: "400px",
+    height: messages.length > 0 ? "400px" : "250px",
+    boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+  };
+
+  // Handle horizontal positioning
+  if (alignRight) {
+    style.right = "40px";
+    style.left = "auto";
+  } else {
+    style.left = `${offsetPosition.x}px`;
+    style.right = "auto";
+  }
+
+  // Handle vertical positioning
+  if (alignBottom) {
+    style.bottom = `${window.innerHeight - offsetPosition.y + 10}px`;
+    style.top = "auto";
+    style.transform = "none"; // No transform needed when positioning from bottom
+  } else {
+    style.top = `${offsetPosition.y - 10}px`;
+    style.bottom = "auto";
+    style.transform = "translateY(-100%)"; // Move up by 100% of height
+  }
 
   return (
     <div
       ref={windowRef}
-      className="absolute bg-binance-dark px-[30px] py-[20px] text-white rounded-[25px] shadow-xl z-[9999] border border-binance-yellow transition-[height] duration-300 ease-in-out"
-      style={{
-        top: `${offsetPosition.y - 10}px`,
-        left: `${offsetPosition.x}px`,
-        width: "400px",
-        height: messages.length > 0 ? "400px" : "200px",
-        transform: "translateY(-100%)",
-        boxShadow:
-          "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-      }}
+      className="absolute bg-binance-dark px-[30px] py-[20px] text-white rounded-[25px] shadow-xl z-[9999] border border-binance-yellow transition-all duration-300 ease-in-out"
+      style={style}
     >
       <div className="flex flex-col h-full">
         {/* Fixed Header */}
@@ -170,20 +219,46 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
           {messages.map((message, index) => (
             <div
               key={index}
-              className={`flex w-full ${message.source === "user" ? "justify-end" : "justify-start"
-                }`}
+              className={`flex w-full ${
+                message.source === "user" ? "justify-end" : "justify-start"
+              }`}
             >
               <div
-                className={`max-w-[80%] ${message.source === "user"
-                  ? "bg-light-gray p-3 rounded-[10px] text-gray-400 text-right"
-                  : "text-white text-left"
-                  }`}
+                className={`max-w-[80%] ${
+                  message.source === "user"
+                    ? "bg-light-gray p-3 rounded-[10px] text-gray-400 text-right"
+                    : "text-white text-left"
+                }`}
               >
                 {message.content}
               </div>
             </div>
           ))}
         </div>
+
+        {/* Suggestion Tags - Only show when messages.length === 0 */}
+        {messages.length === 0 && (
+          <div className="flex flex-wrap gap-2 mb-3">
+            <button
+              onClick={() => handleSendMessage("Where to buy?")}
+              className="bg-binance-gray hover:bg-light-gray text-white text-xs py-1 px-3 rounded-full transition-colors"
+            >
+              Where to buy?
+            </button>
+            <button
+              onClick={() => handleSendMessage("How much is the earnings?")}
+              className="bg-binance-gray hover:bg-light-gray text-white text-xs py-1 px-3 rounded-full transition-colors"
+            >
+              How much is the earnings?
+            </button>
+            <button
+              onClick={() => handleSendMessage("WCT?")}
+              className="bg-binance-gray hover:bg-light-gray text-white text-xs py-1 px-3 rounded-full transition-colors"
+            >
+              WCT
+            </button>
+          </div>
+        )}
 
         {/* Fixed Input Area */}
         <form
