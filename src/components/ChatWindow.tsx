@@ -25,7 +25,7 @@ interface ChatWindowStyle extends React.CSSProperties {
 
 const summaryDictionary: Record<string, string> = {
   Launchpool:
-    "A platform where users stake crypto to earn new tokens before listing",
+    "A platform where users stake crypto to earn new tokens before listing on Binance.",
   Bitcoin: "The first and largest cryptocurrency by market cap",
   Ethereum: "A decentralized platform for smart contracts and DApps",
   BNB: "Binance's native cryptocurrency used for trading fee discounts",
@@ -170,7 +170,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
   // Create the style object with proper typing
   const style: ChatWindowStyle = {
     width: "400px",
-    height: messages.length > 0 ? "400px" : "250px",
+    height: messages.length > 0 ? "400px" : "300px",
     boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
   };
 
@@ -224,7 +224,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
           ref={scrollContainerRef}
           className="flex-1 overflow-y-auto pr-2 space-y-4 mb-4 scroll-smooth"
         >
-          <div className="text-white">
+          <div className="text-white text-base mb-4">
             {summaryDictionary[context] ||
               `No summary available for "${context}"`}
           </div>
@@ -232,17 +232,18 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
           {messages.map((message, index) => (
             <div
               key={index}
-              className={`flex w-full ${message.source === "user" ? "justify-end" : "justify-start"
+              className={`flex w-full mb-4 ${message.source === "user" ? "justify-end" : "justify-start"
                 }`}
             >
-              <div
-                className={`max-w-[80%] ${message.source === "user"
-                  ? "bg-light-gray p-3 rounded-[10px] text-gray-400 text-right"
-                  : "text-white text-left"
-                  }`}
-              >
-                {message.content}
-              </div>
+              {message.source === "user" ? (
+                <div className="bg-[#242731] text-white p-3 rounded-2xl inline-block max-w-[220px]">
+                  {message.content}
+                </div>
+              ) : (
+                <div className="text-white max-w-xs">
+                  {message.content}
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -252,19 +253,19 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
           <div className="flex flex-wrap gap-2 mb-3">
             <button
               onClick={() => handleSendMessage("Where to buy?")}
-              className="bg-binance-gray hover:bg-light-gray text-white text-xs py-1 px-3 rounded-full transition-colors"
+              className="px-4 py-2 bg-[#1E2026] hover:bg-gray-700 text-white text-sm rounded-full"
             >
               Where to buy?
             </button>
             <button
               onClick={() => handleSendMessage("How much is the earnings?")}
-              className="bg-binance-gray hover:bg-light-gray text-white text-xs py-1 px-3 rounded-full transition-colors"
+              className="px-4 py-2 bg-[#1E2026] hover:bg-gray-700 text-white text-sm rounded-full"
             >
               How much is the earnings?
             </button>
             <button
               onClick={() => handleSendMessage("WCT?")}
-              className="bg-binance-gray hover:bg-light-gray text-white text-xs py-1 px-3 rounded-full transition-colors"
+              className="px-4 py-2 bg-[#1E2026] hover:bg-gray-700 text-white text-sm rounded-full"
             >
               WCT
             </button>
@@ -277,18 +278,18 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             e.preventDefault();
             handleSendMessage();
           }}
-          className="flex flex-row w-full justify-between items-center text-sm mt-auto shrink-0"
+          className="flex flex-row w-full gap-2 items-center text-sm mt-auto shrink-0"
         >
           <input
             ref={inputRef}
             value={textInput}
             onChange={(e) => setTextInput(e.target.value)}
             placeholder="Ask a follow up question"
-            className="w-[80%] rounded-[10px] p-[10px] bg-binance-dark focus:outline-none border border-light-gray focus:border-gray"
+            className="w-full bg-[#1E2026] text-white text-sm px-4 py-3 rounded-full focus:outline-none focus:ring-1 focus:ring-binance-yellow"
           />
           <button
             type="submit"
-            className="bg-binance-yellow text-binance-dark disabled:bg-binance-light-yellow rounded-[10px] p-[10px]"
+            className="px-6 py-3 bg-binance-yellow text-black hover:bg-yellow-400 rounded-full text-sm font-bold"
             disabled={!textInput}
           >
             Send

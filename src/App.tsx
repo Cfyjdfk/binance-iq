@@ -17,7 +17,8 @@ function App() {
   const [toast, setToast] = useState({
     message: "",
     type: "success" as "success" | "error" | "info",
-    isVisible: false
+    isVisible: false,
+    subtitle: ""
   });
 
   // MUTEX SYSTEM: Create a system that prevents Agent from opening when Binance IQ is present
@@ -538,8 +539,8 @@ function App() {
     setIsAgentOpen(false);
   };
 
-  const showToast = (message: string, type: "success" | "error" | "info") => {
-    setToast({ message, type, isVisible: true });
+  const showToast = (message: string, type: "success" | "error" | "info", subtitle?: string) => {
+    setToast({ message, type, isVisible: true, subtitle: subtitle || "" });
   };
 
   const closeToast = () => {
@@ -581,6 +582,7 @@ function App() {
           type={toast.type}
           isVisible={toast.isVisible}
           onClose={closeToast}
+          subtitle={toast.subtitle}
         />
 
         {/* Keyboard Shortcut Helper */}
