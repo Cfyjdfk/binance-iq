@@ -1,6 +1,7 @@
 import os
 from typing import List, Dict
 from openai import OpenAI
+import httpx
 from dotenv import load_dotenv
 import numpy as np
 from pathlib import Path
@@ -9,7 +10,11 @@ from pathlib import Path
 load_dotenv()
 
 # Initialize OpenAI client
-client = OpenAI()
+api_key = os.environ.get("OPENAI_API_KEY")
+client = OpenAI(
+    api_key=api_key,
+    http_client=httpx.Client()
+)
 
 class BinanceRAG:
     def __init__(self):
