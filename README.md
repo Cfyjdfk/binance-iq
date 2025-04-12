@@ -71,7 +71,7 @@ The frontend will be available at http://localhost:3000
 ```bash
 cd backend
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-uvicorn src.main:app --reload
+python3 src/server.py
 ```
 The API will be available at http://localhost:8000
 
