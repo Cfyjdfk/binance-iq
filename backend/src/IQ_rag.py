@@ -11,16 +11,15 @@ load_dotenv()
 # Initialize OpenAI client
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-class LaunchpoolRAG:
+class IQRAG:
     def __init__(self):
         self.documents = []
         self.embeddings = []
         
     def load_documents(self):
-        """Load and process the Launchpool documents"""
+        """Load and process the Binance-related documents"""
         data_dir = Path("data")
-        for file in data_dir.glob("launchpool*.txt"):
-            
+        for file in data_dir.glob("*.txt"):
             with open(file, "r", encoding="utf-8") as f:
                 content = f.read()
                 self.documents.append(content)
@@ -55,36 +54,36 @@ class LaunchpoolRAG:
         return [self.documents[i] for i in top_indices]
     
     def answer_question(self, question: str) -> str:
-        """Answer a question about Launchpool using RAG"""
+        """Answer a question about Binance using RAG"""
         # Find relevant context
         context = self.find_relevant_context(question)
         
         # Create the prompt
-        prompt = f"""You are a Binance expert assistant. Based on the following context about Binance, please answer the question in exactly two simple, friendly sentences that a new user can easily understand.
+        prompt = f"""Based on the following context about Binance, please answer the question in exactly two simple, friendly sentences that a new user can easily understand.
         
 Context:
 {context}
 
 Question: {question}
 
-Please provide a comprehensive answer based on the context above."""
+Please provide a clear, concise answer in exactly two sentences."""
 
         # Get answer from GPT
         response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a helpful assistant that explains Binance Launchpool."},
+                {"role": "system", "content": "You are a friendly Binance expert who explains crypto concepts in simple, easy-to-understand terms for beginners."},
                 {"role": "user", "content": prompt}
             ],
             temperature=0.7,
-            max_tokens=500
+            max_tokens=150
         )
         
         return response.choices[0].message.content
 
 def main():
     # Initialize the RAG system
-    rag = LaunchpoolRAG()
+    rag = IQRAG()
     
     # Load and process documents
     print("Loading documents...")
@@ -95,7 +94,7 @@ def main():
     rag.create_embeddings()
     
     # Example question
-    question = "What is Binance Launchpool and how does it work?"
+    question = "What is WCT?"
     
     # Get answer
     print("\nQuestion:", question)
