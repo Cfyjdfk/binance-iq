@@ -1,7 +1,13 @@
 import React from 'react';
-import { MagnifyingGlassIcon, SunIcon } from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon, SunIcon, RocketLaunchIcon } from '@heroicons/react/24/outline';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  openAgent: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ openAgent }) => {
+    const isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
+    
     return (
         <nav className="bg-binance-dark text-white px-6 py-3 flex items-center justify-between">
             <div className="flex items-center space-x-8">
@@ -21,6 +27,17 @@ const Navbar: React.FC = () => {
             </div>
 
             <div className="flex items-center space-x-4">
+                <button 
+                  onClick={openAgent}
+                  className="flex items-center gap-1 px-3 py-1 text-sm rounded border border-gray-700 hover:border-binance-yellow hover:text-binance-yellow"
+                >
+                  <RocketLaunchIcon className="h-4 w-4" />
+                  <span>Agent</span>
+                  <span className="ml-1 text-xs text-gray-400">
+                    {isMac ? '⌘K' : 'Ctrl+K'}
+                  </span>
+                </button>
+                
                 <button>
                     <MagnifyingGlassIcon className="h-5 w-5" />
                 </button>
