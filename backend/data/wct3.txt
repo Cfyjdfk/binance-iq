@@ -1,0 +1,18 @@
+About WalletConnect Token
+What is WalletConnect and the WalletConnect Token (WCT)?
+The WalletConnect Network is the onchain UX ecosystem powering 150 million connections for over 23 million users across 600 wallets, 40K app projects, and all chains. It is the open and decentralized network that enables users to connect to apps onchain, designed for both utility and ownership without compromises. The WalletConnect Token (WCT) is integral to the WalletConnect Network — fueling the onchain UX ecosystem by empowering its community of users, apps, and wallets to contribute to a better onchain future through shared incentives. Launching on Optimism’s OP Mainnet, the token will employ Ethereum’s security and OP Mainnet’s speed.
+How many WCT coins are there in circulation?
+The initial supply of WCT tokens is capped at 1 billion, with allocations designed to support the Network's growth and sustainability.
+In the initial design of the WalletConnect Network's tokenomics, token inflation is not contemplated as a mechanism for token distribution or network sustainability. The current model focuses on utilizing existing token allocations and fee structures to support network operations and incentivize participation. However, the network's governance structure and community retain the flexibility to implement inflation mechanisms in the future if deemed necessary.
+Who is the team behind WalletConnect?
+The WalletConnect Network was initially developed under WalletConnect Inc. and its founder, Pedro Gomes. Since progressing along its path toward becoming a fully decentralized and permissionless network, it has a number of contributors and node operators, including the WalletConnect Foundation, Reown, Consensys, Kiln, Ledger, Luga Nodes, 1kx, Figment, and Sensei Nodes The WalletConnect Foundation board members include Pedro Gomes and Yessin Schiegg.
+Where Can I Buy WCT?
+WCT will enter its first release cycle in 2024, and transferability of the token will be implemented at a later date.
+WCT is a critical token of the WalletConnect Network that is used for:
+Fees: Used to pay for network services like relay usage.*
+Rewards: Tokens are given as incentives to keep the network secure and efficient.
+Staking: Users can stake tokens to earn rewards and take part in governance.
+Governance: WCT holders can vote on proposals and changes, giving the community control over the network’s development through decentralized governance.*
+Governance and fees features are expected to be unlocked in the near-term.*
+The WalletConnect Network's ecosystem:
+The WalletConnect Network has facilitated 185M+ onchain connections for 30M+ users across 50K+ app projects since its inception. It continues to power over 22M monthly connections for users across the world's leading decentralized applications.
