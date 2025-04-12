@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { chatService } from "../services/api";
 
 interface ChatWindowProps {
   context: string;
@@ -56,13 +57,13 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         const chatWindowWidth = 400; // Width of our chat window
         const chatWindowHeight = messages.length > 0 ? 400 : 250; // Height of our chat window
         const minMargin = 20; // Minimum margin from edge
-        
+
         // Check if there's enough space on the right
         const willOverflowRight = position.x + chatWindowWidth + minMargin > windowWidth;
-        
+
         // Check if there's enough space at the top (when using transform: translateY(-100%))
         const willOverflowTop = position.y - chatWindowHeight - minMargin < 0;
-        
+
         setAlignRight(willOverflowRight);
         setAlignBottom(willOverflowTop);
         setOffsetPosition({
@@ -78,7 +79,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     // Listen for scroll and resize events
     window.addEventListener("scroll", handlePositioning);
     window.addEventListener("resize", handlePositioning);
-    
+
     return () => {
       window.removeEventListener("scroll", handlePositioning);
       window.removeEventListener("resize", handlePositioning);
@@ -123,9 +124,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     }
   }, [position]); // Focus when chat window opens (position changes from null)
 
-  const handleSendMessage = (overrideText?: string) => {
+  const handleSendMessage = async (overrideText?: string) => {
     const messageToSend = overrideText || textInput;
-    
+
     if (!messageToSend.trim()) return;
 
     // Add user message
@@ -140,16 +141,28 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     // Clear input field
     setTextInput("");
 
-    // Simulate agent response with a slight delay
-    setTimeout(() => {
+    try {
+      // Get response from backend
+      const response = await chatService.sendMessage(messageToSend);
+
+      // Add agent response
       setMessages((prevMessages) => [
         ...prevMessages,
         {
           source: "agent",
-          content: `WalletConnect (WCT), the 67th project on Binance Launchpool, is an open-source protocol that securely connects users to decentralized applications across various blockchains; its native token, WCT, facilitates staking, governance, and future fee-sharing within the network.`,
+          content: response,
         }
       ]);
-    }, 500);
+    } catch (error) {
+      // Add error message if API call fails
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          source: "agent",
+          content: "Sorry, I'm having trouble connecting to the server. Please try again later.",
+        }
+      ]);
+    }
   };
 
   if (!position || !offsetPosition) return null;
@@ -219,16 +232,14 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
           {messages.map((message, index) => (
             <div
               key={index}
-              className={`flex w-full ${
-                message.source === "user" ? "justify-end" : "justify-start"
-              }`}
+              className={`flex w-full ${message.source === "user" ? "justify-end" : "justify-start"
+                }`}
             >
               <div
-                className={`max-w-[80%] ${
-                  message.source === "user"
-                    ? "bg-light-gray p-3 rounded-[10px] text-gray-400 text-right"
-                    : "text-white text-left"
-                }`}
+                className={`max-w-[80%] ${message.source === "user"
+                  ? "bg-light-gray p-3 rounded-[10px] text-gray-400 text-right"
+                  : "text-white text-left"
+                  }`}
               >
                 {message.content}
               </div>

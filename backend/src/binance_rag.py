@@ -1,6 +1,6 @@
 import os
 from typing import List, Dict
-import openai
+from openai import OpenAI
 from dotenv import load_dotenv
 import numpy as np
 from pathlib import Path
@@ -9,7 +9,7 @@ from pathlib import Path
 load_dotenv()
 
 # Initialize OpenAI client
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI()
 
 class BinanceRAG:
     def __init__(self):
@@ -34,7 +34,7 @@ class BinanceRAG:
         """Create embeddings for the documents"""
         print("Creating embeddings...")
         for doc in self.documents:
-            response = openai.embeddings.create(
+            response = client.embeddings.create(
                 model="text-embedding-3-small",
                 input=doc["content"]
             )
@@ -44,7 +44,7 @@ class BinanceRAG:
     def find_relevant_context(self, query: str, top_k: int = 3) -> List[Dict]:
         """Find the most relevant context for a query"""
         # Create embedding for the query
-        query_embedding = openai.embeddings.create(
+        query_embedding = client.embeddings.create(
             model="text-embedding-3-small",
             input=query
         ).data[0].embedding
@@ -74,7 +74,7 @@ class BinanceRAG:
     
     def get_gpt_response(self, question: str) -> str:
         """Get a direct response from GPT for non-Binance questions"""
-        response = openai.chat.completions.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant that provides clear and accurate answers to any question."},
@@ -111,7 +111,7 @@ Question: {question}
 Please provide a clear, concise answer in exactly two sentences."""
 
         # Get answer from GPT
-        response = openai.chat.completions.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a friendly Binance expert who explains crypto concepts in simple, easy-to-understand terms for beginners."},
