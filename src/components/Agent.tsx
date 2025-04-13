@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { XMarkIcon, MinusIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon, MinusIcon,  } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import agentService from "../services/agentService";
 import { useIQContext, Message, ChatOptions } from "../AIContext";
@@ -17,6 +17,23 @@ interface AgentProps {
     subtitle?: string
   ) => void;
 }
+
+const PinIcon = ({ className }: { className?: string }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <path d="M9 4v6l-2 4v2h10v-2l-2-4V4" />
+    <circle cx="12" cy="4" r="2" />
+    <path d="M12 16v6" />
+  </svg>
+);
 
 const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
   const navigate = useNavigate();
@@ -46,6 +63,7 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
   >(null);
   const [isMinimized, setIsMinimized] = useState(false);
   const [wasJustDragging, setWasJustDragging] = useState(false);
+  const [isPinned, setIsPinned] = useState(false);
 
   // State for draggable floating window
   const [position, setPosition] = useState({
@@ -218,21 +236,33 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
   // Setup resize event handlers
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (isResizing) {
-        // Calculate new width and height
-        const newWidth = Math.max(
-          280,
-          resizeStartSize.width + (e.clientX - resizeStartPos.x)
-        );
-        const newHeight = Math.max(
-          300,
-          resizeStartSize.height + (e.clientY - resizeStartPos.y)
-        );
-
-        // Update window size
+      if (isResizing && floatingWindowRef.current) {
+        // Get the current mouse position
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+        
+        // Calculate the bottom-right corner position (this stays fixed)
+        const bottomRightX = position.x + windowSize.width;
+        const bottomRightY = position.y + windowSize.height;
+        
+        // Calculate new top-left position (bounded to prevent the window from collapsing)
+        const newX = Math.min(mouseX, bottomRightX - 280);
+        const newY = Math.min(mouseY, bottomRightY - 300);
+        
+        // Calculate new dimensions based on the distance between top-left and bottom-right
+        const newWidth = bottomRightX - newX;
+        const newHeight = bottomRightY - newY;
+        
+        // Update position
+        setPosition({
+          x: newX,
+          y: newY
+        });
+        
+        // Update size
         setWindowSize({
           width: newWidth,
-          height: newHeight,
+          height: newHeight
         });
       }
     };
@@ -242,17 +272,20 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
     };
 
     if (isResizing) {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
     }
 
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isResizing, resizeStartPos, resizeStartSize]);
+  }, [isResizing, position, windowSize]);
 
   const handleDragStart = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Skip if window is pinned
+    if (isPinned) return;
+    
     if (floatingWindowRef.current) {
       const rect = floatingWindowRef.current.getBoundingClientRect();
       setDragOffset({
@@ -879,6 +912,11 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, [isPurchasePage, isMinimized, windowSize.width]);
 
+  // Add handleTogglePin function
+  const handleTogglePin = () => {
+    setIsPinned(!isPinned);
+  };
+
   if (!isOpen) return null;
 
   // If we're in the morphing state, render the morphing component
@@ -1144,7 +1182,7 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
         <div className="h-full bg-black border border-binance-yellow flex flex-col overflow-hidden rounded-3xl px-2">
           {/* Header - Draggable */}
           <div
-            className="flex items-center justify-between p-4 cursor-move"
+            className={`flex items-center justify-between p-4 ${isPinned ? '' : 'cursor-move'}`}
             onMouseDown={handleDragStart}
           >
             <div className="flex items-center gap-2">
@@ -1152,6 +1190,13 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
               <span className="text-white text-lg font-bold">Agent</span>
             </div>
             <div className="flex items-center gap-2">
+              <button
+                onClick={handleTogglePin}
+                className={`text-gray-400 hover:text-binance-yellow ${isPinned ? 'text-binance-yellow' : ''}`}
+                title={isPinned ? "Unpin window" : "Pin window"}
+              >
+                <PinIcon className="h-5 w-5" />
+              </button>
               <button
                 onClick={handleMinimize}
                 className="text-gray-400 hover:text-white"
@@ -1166,6 +1211,21 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
               </button>
             </div>
           </div>
+
+          {/* Add resize handle in the top-left corner */}
+          <div
+            className="absolute top-0 left-0 w-4 h-4 cursor-nw-resize"
+            onMouseDown={handleResizeStart}
+            style={{
+              backgroundImage:
+                "radial-gradient(circle, rgba(252,213,53,0.8) 1px, transparent 1px)",
+              backgroundSize: "3px 3px",
+              backgroundPosition: "top left",
+              top: "3px",
+              left: "3px",
+              zIndex: 10,
+            }}
+          />
 
           {/* Quick actions buttons */}
           {messages.length === 0 && (
@@ -1331,20 +1391,6 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
               </button>
             </div>
           </div>
-
-          {/* Resize handle */}
-          <div
-            className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize"
-            onMouseDown={handleResizeStart}
-            style={{
-              backgroundImage:
-                "radial-gradient(circle, rgba(252,213,53,0.8) 1px, transparent 1px)",
-              backgroundSize: "3px 3px",
-              backgroundPosition: "bottom right",
-              bottom: "3px",
-              right: "3px",
-            }}
-          />
         </div>
       </div>
     );
