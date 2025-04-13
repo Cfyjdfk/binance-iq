@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { RocketLaunchIcon } from '@heroicons/react/24/outline';
+import { useLocation } from 'react-router-dom';
 
 interface KeyboardShortcutHelperProps {
   openAgent: () => void;
@@ -8,30 +9,22 @@ interface KeyboardShortcutHelperProps {
 const KeyboardShortcutHelper: React.FC<KeyboardShortcutHelperProps> = ({ openAgent }) => {
   const [isVisible, setIsVisible] = useState(false);
   const isMac = navigator.userAgent.toLowerCase().indexOf('mac') !== -1;
+  const location = useLocation();
   
   useEffect(() => {
-    // Show the helper after 3 seconds on the page for first-time users
-    const timer = setTimeout(() => {
-      // Check if we've shown this before
-      const hasSeenHelper = localStorage.getItem('hasSeenAgentHelper');
-      if (!hasSeenHelper) {
-        setIsVisible(true);
-        
-        // Hide after 10 seconds
-        setTimeout(() => {
-          setIsVisible(false);
-          localStorage.setItem('hasSeenAgentHelper', 'true');
-        }, 10000);
-      }
-    }, 3000);
+    // Always show the helper on homepage immediately
+    // Only show on homepage
+    if (location.pathname === '/') {
+      setIsVisible(true);
+    }
     
-    return () => clearTimeout(timer);
-  }, []);
+    return () => {};
+  }, [location.pathname]);
   
   if (!isVisible) return null;
   
   return (
-    <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-40 bg-binance-dark border border-binance-yellow rounded-lg shadow-lg p-4 animate-fade-in">
+    <div className="fixed bottom-6 right-6 z-40 bg-binance-dark border border-binance-yellow rounded-lg shadow-lg p-4 animate-fade-in">
       <div className="flex items-center space-x-4">
         <RocketLaunchIcon className="h-6 w-6 text-binance-yellow" />
         <div>
