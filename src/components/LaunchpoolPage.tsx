@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import TextSummary from './TextSummary';
 
 interface PoolData {
     icon: string;
@@ -68,9 +69,10 @@ const LaunchpoolPage: React.FC = () => {
             {/* Header Section */}
             <div className="pt-16 pb-12 px-6">
                 <div className="max-w-7xl mx-auto">
-                    <h1 className="text-5xl font-bold mb-4">Binance's Token Launch Platform</h1>
-                    <p className="text-gray-400 text-lg mb-12">Lock tokens and get airdrops on Binance.</p>
-
+                    <TextSummary>
+                        <h1 className="text-5xl font-bold mb-4">Binance's Token Launch Platform</h1>
+                        <p className="text-gray-400 text-lg mb-12">Lock tokens and get airdrops on Binance.</p>
+                    </TextSummary>
                     <div className="grid grid-cols-4 gap-8">
                         <div>
                             <div className="text-2xl font-bold text-white">$ 15,486,466,586</div>
