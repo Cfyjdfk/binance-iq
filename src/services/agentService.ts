@@ -14,6 +14,9 @@ export interface AgentResponse {
   };
 }
 
+// Backend API URL
+const API_URL = 'http://localhost:8000';
+
 // Mock data for different response types
 const mockResponses: Record<string, AgentResponse> = {
   BTC_PURCHASE: {
@@ -66,22 +69,25 @@ const mockResponses: Record<string, AgentResponse> = {
   }
 };
 
+// Helper function to check if message is a buy order for BTC
+const isBTCBuyMessage = (message: string): boolean => {
+  const lowerMsg = message.toLowerCase();
+  return (
+    lowerMsg.includes('buy') && 
+    (lowerMsg.includes('bitcoin') || lowerMsg.includes('btc')) &&
+    (lowerMsg.includes('500') || lowerMsg.includes('usd') || lowerMsg.includes('worth'))
+  );
+};
+
 const agentService = {
   async processMessage(message: string): Promise<AgentResponse> {
-    // In a real app, this would call an API endpoint
-    // For demo purposes, we'll simulate responses based on the message content
-    
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
     // Handle specific case for orderType, used when navigated to purchase page
     if (message === "orderType") {
       return mockResponses.ORDER_TYPE_PROMPT;
     }
     
-    // Simulate response based on message content
-    if (message.toLowerCase().includes('buy') && message.toLowerCase().includes('bitcoin') || 
-        message.toLowerCase().includes('buy') && message.toLowerCase().includes('btc')) {
+    // Handle the hardcoded flow for buying BTC
+    if (isBTCBuyMessage(message)) {
       return mockResponses.BTC_PURCHASE;
     }
     
@@ -101,13 +107,25 @@ const agentService = {
       return mockResponses.ORDER_SUCCESS;
     }
     
-    // Default fallback response
-    return {
-      text: "I'm not sure how to help with that. Would you like to know about Binance's trading features or current crypto prices?",
-      options: {
-        type: null
-      }
-    };
+    // For all other queries, use the RAG backend
+    try {
+      const response = await axios.post(`${API_URL}/chat`, { message });
+      return {
+        text: response.data.response,
+        options: {
+          type: null
+        }
+      };
+    } catch (error) {
+      console.error("Error fetching from RAG backend:", error);
+      // Fallback response in case of API failure
+      return {
+        text: "I'm having trouble connecting to my knowledge base. Would you like to try asking something else?",
+        options: {
+          type: null
+        }
+      };
+    }
   }
 };
 

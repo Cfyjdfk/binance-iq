@@ -129,70 +129,71 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <div className="bg-binance-dark min-h-screen text-white px-6 py-16">
-      <div className="max-w-7xl mx-auto grid grid-cols-2 gap-12">
-        <div className="flex  flex-col space-y-8 w-[60%] h-max ">
-          <div>
-          <div className="h-[50px]"></div>
-            <h1 className="text-7xl font-bold mb-4 text-[#FCD535]">
+    <div className="bg-binance-dark min-h-screen text-white">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 px-6">
+        {/* Left column */}
+        <div className="lg:col-span-6 pt-16 lg:pt-40">
+          <div className="max-w-lg">
+            <h1 className="text-5xl md:text-7xl font-bold mb-2 text-[#FCD535]">
               {formatNumber(userCount)}
             </h1>
-            <h2 className="text-7xl font-bold text-white">USERS TRUST US</h2>
-          </div>
-
-          <div className="max-w-md mb-[50px]">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Email/Phone number"
-                className="w-full px-4 py-3 bg-binance-gray rounded text-white focus:outline-none focus:ring-2 focus:ring-binance-yellow"
-              />
-              <button className="absolute right-0 top-0 h-full px-6 bg-binance-yellow text-black rounded-r hover:bg-yellow-400">
-                Sign Up
-              </button>
+            <h2 className="text-5xl md:text-7xl font-bold text-white mb-12">
+              USERS TRUST US
+            </h2>
+          
+            <div className="mt-16 mb-16">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Email/Phone number"
+                  className="w-full px-4 py-3 bg-binance-gray rounded text-white focus:outline-none focus:ring-2 focus:ring-binance-yellow"
+                />
+                <button className="absolute right-0 top-0 h-full px-6 bg-binance-yellow text-black rounded-r hover:bg-yellow-400 font-medium">
+                  Sign Up
+                </button>
+              </div>
             </div>
-          </div>
 
-          <div className="h-[150px]"></div>
-
-          <div className="flex items-center space-x-4 mt-12">
-            <p className="text-gray-400">Or Continue With</p>
-            <div className="flex space-x-4">
-              <button className="p-2 bg-binance-gray rounded-full hover:bg-gray-700">
-                <img src="/google.svg" alt="Google" className="h-6 w-6" />
-              </button>
-              <button className="p-2 bg-binance-gray rounded-full hover:bg-gray-700">
-                <img src="/apple.svg" alt="Apple" className="h-6 w-6" />
-              </button>
-              <button className="p-2 bg-binance-gray rounded-full hover:bg-gray-700">
-                <img src="/qr.svg" alt="QR Code" className="h-6 w-6" />
-              </button>
+            <div className="flex items-center space-x-4 mt-12">
+              <p className="text-gray-400">Or Continue With</p>
+              <div className="flex space-x-4">
+                <button className="p-2 bg-binance-gray rounded-full hover:bg-gray-700">
+                  <img src="/google.svg" alt="Google" className="h-6 w-6" />
+                </button>
+                <button className="p-2 bg-binance-gray rounded-full hover:bg-gray-700">
+                  <img src="/apple.svg" alt="Apple" className="h-6 w-6" />
+                </button>
+                <button className="p-2 bg-binance-gray rounded-full hover:bg-gray-700">
+                  <img src="/qr.svg" alt="QR Code" className="h-6 w-6" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
+        {/* Right column */}
+        <div className="lg:col-span-6 pt-8 lg:pt-24">
+          <div className="flex items-center justify-between mb-4">
             <div className="flex space-x-4">
-              <button className="text-white font-semibold">Popular</button>
-              <button className="text-gray-400 hover:text-white">
+              <button className="text-white font-semibold border-b-2 border-binance-yellow pb-1">Popular</button>
+              <button className="text-gray-400 hover:text-white pb-1 border-b-2 border-transparent hover:border-gray-400">
                 New Listing
               </button>
             </div>
-            <button className="text-gray-400 hover:text-binance-yellow">
-              View All 350+ Coins →
+            <button className="text-gray-400 hover:text-binance-yellow flex items-center">
+              View All 350+ Coins <span className="ml-1">→</span>
             </button>
           </div>
 
           {/* Crypto Prices Container */}
-          <div className="bg-[#1E2026] rounded-lg p-6">
-            <div className="">
+          <div className="bg-[#1E2026] rounded-lg p-4 mb-4">
+            <div className="space-y-3">
               {cryptoPrices.map((crypto) => (
                 <div
                   key={crypto.symbol}
-                  className="flex items-center justify-between p-4 bg-binance-gray rounded hover:bg-gray-700 cursor-pointer"
+                  className="flex items-center justify-between p-3 bg-binance-gray rounded hover:bg-gray-700 cursor-pointer"
                 >
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-3">
                     <img
                       src={crypto.icon}
                       alt={crypto.name}
@@ -221,19 +222,19 @@ const Hero: React.FC = () => {
           </div>
 
           {/* News Container */}
-          <div className="bg-[#1E2026] rounded-lg p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-semibold">News</h3>
-              <button className="text-gray-400 hover:text-binance-yellow">
-                View All News →
+          <div className="bg-[#1E2026] rounded-lg p-4 mb-4">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-lg font-semibold">News</h3>
+              <button className="text-gray-400 hover:text-binance-yellow flex items-center">
+                View All News <span className="ml-1">→</span>
               </button>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {newsItems.map((news, index) => (
                 <a
                   key={index}
                   href={news.link}
-                  className="block text-gray-300 hover:text-white truncate"
+                  className="block text-gray-300 hover:text-white truncate py-1"
                 >
                   {news.title}
                 </a>
@@ -242,12 +243,12 @@ const Hero: React.FC = () => {
           </div>
 
           {/* Launchpool Container */}
-          <div className="bg-[#1E2026] rounded-lg p-6">
+          <div className="bg-[#1E2026] rounded-lg p-4">
             <TextSummary>
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center space-x-2">
-                  <h3 className="text-xl font-semibold">Launchpool</h3>
-                  <img src="/wct.svg" alt="WCT" className="h-6 w-6" />
+                  <h3 className="text-lg font-semibold">Launchpool</h3>
+                  <img src="/wct.svg" alt="WCT" className="h-5 w-5" />
                   <span className="text-sm font-medium">WCT</span>
                   <span className="text-xs px-2 py-0.5 bg-green-600 text-white rounded">
                     Ongoing
@@ -257,7 +258,7 @@ const Hero: React.FC = () => {
                   →
                 </button>
               </div>
-              <div className="flex space-x-4">
+              <div className="flex space-x-6 mt-2">
                 <div className="text-center">
                   <div className="text-2xl font-bold">03</div>
                   <div className="text-xs text-gray-400">D</div>
