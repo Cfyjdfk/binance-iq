@@ -30,12 +30,24 @@ const TextSummary: React.FC<TextSummaryProps> = ({ children }) => {
       if (selection && selection.toString().trim() && !popupPosition) {
         const range = selection.getRangeAt(0);
         const rect = range.getBoundingClientRect();
-
-        // Position tooltip above the selection
-        setTooltipPosition({
-          x: rect.left + rect.width / 2 + window.scrollX,
-          y: rect.top + window.scrollY - 10,
-        });
+        
+        // Check if selection is near the top of the page
+        const isNearTop = rect.top < 200;
+        
+        // Position tooltip based on selection position
+        if (isNearTop) {
+          // Position below the selection when near top
+          setTooltipPosition({
+            x: rect.left + rect.width / 2 + window.scrollX,
+            y: rect.bottom + window.scrollY + 5, // 5px below selection
+          });
+        } else {
+          // Position above the selection (default)
+          setTooltipPosition({
+            x: rect.left + rect.width / 2 + window.scrollX,
+            y: rect.top + window.scrollY - 10,
+          });
+        }
       } else if (!selection || selection.toString().trim() === "") {
         // Hide tooltip when no text is selected
         setTooltipPosition(null);
@@ -94,6 +106,9 @@ const TextSummary: React.FC<TextSummaryProps> = ({ children }) => {
           const rect = range.getBoundingClientRect();
           const text = selection.toString().trim();
 
+          // Check if text is selected near the top of the viewport (less than 200px from top)
+          const isNearTop = rect.top < 200;
+          
           // Calculate position relative to document to anchor to text
           const x = Math.max(
             0,
@@ -102,7 +117,11 @@ const TextSummary: React.FC<TextSummaryProps> = ({ children }) => {
               window.innerWidth + window.scrollX - 200
             )
           );
-          const y = Math.max(50, rect.top + window.scrollY);
+          
+          // If text is near the top, position popup BELOW the selection instead of above
+          const y = isNearTop 
+            ? Math.max(50, rect.bottom + window.scrollY + 10) // Position below with 10px gap
+            : Math.max(50, rect.top + window.scrollY); // Position at top (default behavior)
 
           // Store the text and position
           setSelectedText(text);
@@ -258,15 +277,25 @@ const TextSummary: React.FC<TextSummaryProps> = ({ children }) => {
       {/* Tooltip for keyboard shortcut */}
       {tooltipPosition && !popupPosition && (
         <div
-          className="absolute bg-binance-gray text-white text-xs py-1 px-2 rounded pointer-events-none z-50 transform -translate-x-1/2 -translate-y-full"
+          className="absolute bg-binance-gray text-white text-xs py-1 px-2 rounded pointer-events-none z-50 transform -translate-x-1/2"
           style={{
             top: `${tooltipPosition.y}px`,
             left: `${tooltipPosition.x}px`,
             boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
+            transform: tooltipPosition.y > window.scrollY + 200 
+              ? "translate(-50%, -100%)" // Position above when tooltip is not at top
+              : "translate(-50%, 0)", // Position below when tooltip is at top
           }}
         >
           <span className="font-medium">⌘K / Ctrl+K to learn more</span>
-          <div className="absolute w-2 h-2 bg-binance-gray rotate-45 left-1/2 -bottom-1 -ml-1"></div>
+          {/* Arrow pointing to the text */}
+          <div 
+            className="absolute w-2 h-2 bg-binance-gray rotate-45 left-1/2 -ml-1"
+            style={{
+              bottom: tooltipPosition.y > window.scrollY + 200 ? "-1px" : "auto",
+              top: tooltipPosition.y > window.scrollY + 200 ? "auto" : "-1px",
+            }}
+          ></div>
         </div>
       )}
 

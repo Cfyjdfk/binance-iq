@@ -187,8 +187,12 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         // Check if there's enough space at the top (when using transform: translateY(-100%))
         const willOverflowTop = position.y - chatWindowHeight - minMargin < 0;
 
+        // Check if position is below selected text (y value is at the bottom of selection)
+        // This helps us identify when we should render below the text
+        const isBelowSelection = position.y > 200 && position.y < window.scrollY + 250;
+
         setAlignRight(willOverflowRight);
-        setAlignBottom(willOverflowTop);
+        setAlignBottom(willOverflowTop || isBelowSelection);
         setOffsetPosition({
           x: position.x,
           y: position.y,
@@ -334,9 +338,10 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
   // Handle vertical positioning
   if (alignBottom) {
-    style.bottom = `${window.innerHeight - offsetPosition.y + 10}px`;
-    style.top = "auto";
-    style.transform = "none"; // No transform needed when positioning from bottom
+    // When positioned below text, don't move it up from the bottom edge
+    style.top = `${offsetPosition.y}px`;
+    style.bottom = "auto";
+    style.transform = "none"; // No transform needed when positioning below
   } else {
     style.top = `${offsetPosition.y - 10}px`;
     style.bottom = "auto";
