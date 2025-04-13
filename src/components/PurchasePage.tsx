@@ -25,10 +25,10 @@ interface PurchasePageProps {
 
 const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
   // Get state from context
-  const { 
-    purchaseState, 
-    setPurchaseState, 
-    highlightBuyButton, 
+  const {
+    purchaseState,
+    setPurchaseState,
+    highlightBuyButton,
     setHighlightBuyButton,
     highlightTotalInput,
     setHighlightTotalInput,
@@ -39,7 +39,7 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
     highlightOrderTypes,
     setHighlightOrderTypes
   } = useIQContext();
-  
+
   // Create local state that syncs with context
   const [buyPrice, setBuyPrice] = useState<string>(purchaseState.buyPrice);
   const [sellPrice, setSellPrice] = useState<string>(purchaseState.sellPrice);
@@ -57,7 +57,7 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
     "spot" | "cross" | "isolated" | "grid"
   >("spot");
   const [searchQuery, setSearchQuery] = useState<string>("");
-  
+
   // Add a flag to track if updates are from local or context changes
   const isUpdatingFromContext = useRef(false);
   const isCalculatingTotal = useRef(false);
@@ -87,7 +87,7 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
   useEffect(() => {
     // Set the flag to indicate we're updating from context
     isUpdatingFromContext.current = true;
-    
+
     // Update local state with context values
     setBuyPrice(purchaseState.buyPrice);
     setSellPrice(purchaseState.sellPrice);
@@ -98,12 +98,12 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
     setBuySliderValue(purchaseState.buySliderValue);
     setSellSliderValue(purchaseState.sellSliderValue);
     setOrderType(purchaseState.orderType);
-    
+
     // Reset the flag after a short delay to ensure all state updates have processed
     const timeoutId = setTimeout(() => {
       isUpdatingFromContext.current = false;
     }, 0);
-    
+
     return () => clearTimeout(timeoutId);
   }, [purchaseState]);
 
@@ -125,11 +125,11 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
       }));
     }
   }, [
-    buyPrice, sellPrice, 
-    buyAmount, sellAmount, 
-    buyTotal, sellTotal, 
-    buySliderValue, sellSliderValue, 
-    orderType, 
+    buyPrice, sellPrice,
+    buyAmount, sellAmount,
+    buyTotal, sellTotal,
+    buySliderValue, sellSliderValue,
+    orderType,
     setPurchaseState
   ]);
 
@@ -139,7 +139,7 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
       isCalculatingTotal.current = true;
       const calculatedTotal = (parseFloat(buyAmount) * parseFloat(buyPrice)).toFixed(2);
       setBuyTotal(calculatedTotal);
-      
+
       // Reset calculation flag after state update
       setTimeout(() => {
         isCalculatingTotal.current = false;
@@ -153,7 +153,7 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
       isCalculatingTotal.current = true;
       const calculatedTotal = (parseFloat(sellAmount) * parseFloat(sellPrice)).toFixed(2);
       setSellTotal(calculatedTotal);
-      
+
       // Reset calculation flag after state update
       setTimeout(() => {
         isCalculatingTotal.current = false;
@@ -167,13 +167,13 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
       isCalculatingTotal.current = true;
       const calculatedAmount = (parseFloat(buyTotal) / parseFloat(buyPrice)).toFixed(6);
       setBuyAmount(calculatedAmount);
-      
+
       // Update slider position based on amount
       const maxAmount = 0.01;
       const amountValue = parseFloat(calculatedAmount);
       const newSliderValue = Math.min(Math.round((amountValue / maxAmount) * 100), 100);
       setBuySliderValue(newSliderValue);
-      
+
       // Reset calculation flag after state update
       setTimeout(() => {
         isCalculatingTotal.current = false;
@@ -187,13 +187,13 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
       isCalculatingTotal.current = true;
       const calculatedAmount = (parseFloat(sellTotal) / parseFloat(sellPrice)).toFixed(6);
       setSellAmount(calculatedAmount);
-      
+
       // Update slider position based on amount
       const maxAmount = 0.01;
       const amountValue = parseFloat(calculatedAmount);
       const newSliderValue = Math.min(Math.round((amountValue / maxAmount) * 100), 100);
       setSellSliderValue(newSliderValue);
-      
+
       // Reset calculation flag after state update
       setTimeout(() => {
         isCalculatingTotal.current = false;
@@ -206,7 +206,7 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
     const value = e.target.value;
     if (value === "" || /^\d*\.?\d*$/.test(value)) {
       setBuyPrice(value);
-      
+
       // Turn off highlight when user interacts with the field
       if (highlightPriceInput) {
         setHighlightPriceInput(false);
@@ -227,7 +227,7 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
     const value = e.target.value;
     if (value === "" || /^\d*\.?\d*$/.test(value)) {
       setBuyAmount(value);
-      
+
       // Update slider position based on amount
       if (value && parseFloat(value) > 0) {
         const maxAmount = 0.01;
@@ -237,7 +237,7 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
       } else {
         setBuySliderValue(0);
       }
-      
+
       // Turn off highlight when user interacts with the field
       if (highlightAmountInput) {
         setHighlightAmountInput(false);
@@ -250,7 +250,7 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
     const value = e.target.value;
     if (value === "" || /^\d*\.?\d*$/.test(value)) {
       setSellAmount(value);
-      
+
       // Update slider position based on amount
       if (value && parseFloat(value) > 0) {
         const maxAmount = 0.01;
@@ -275,7 +275,7 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
         setBuyAmount("0.00000");
         setBuySliderValue(0);
       }
-      
+
       // Turn off highlight once user interacts with the field
       if (highlightTotalInput) {
         setHighlightTotalInput(false);
@@ -307,10 +307,10 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
     const maxAmount = 0.01;
     const newAmount = (maxAmount * (value / 100)).toFixed(6);
     isCalculatingTotal.current = true;
-    
+
     // Update the amount in the buy side
     setBuyAmount(newAmount);
-    
+
     // Also update the total based on the new amount
     if (parseFloat(newAmount) > 0 && parseFloat(buyPrice) > 0 && buyPrice !== "Market") {
       const calculatedTotal = (parseFloat(newAmount) * parseFloat(buyPrice)).toFixed(2);
@@ -318,7 +318,7 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
     } else {
       setBuyTotal("0");
     }
-    
+
     // Reset calculation flag after state update
     setTimeout(() => {
       isCalculatingTotal.current = false;
@@ -334,10 +334,10 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
     const maxAmount = 0.01;
     const newAmount = (maxAmount * (value / 100)).toFixed(6);
     isCalculatingTotal.current = true;
-    
+
     // Update the amount in the sell side
     setSellAmount(newAmount);
-    
+
     // Also update the total based on the new amount
     if (parseFloat(newAmount) > 0 && parseFloat(sellPrice) > 0 && sellPrice !== "Market") {
       const calculatedTotal = (parseFloat(newAmount) * parseFloat(sellPrice)).toFixed(2);
@@ -345,7 +345,7 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
     } else {
       setSellTotal("0");
     }
-    
+
     // Reset calculation flag after state update
     setTimeout(() => {
       isCalculatingTotal.current = false;
@@ -489,9 +489,9 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
   // Create a style for the glow effect
   const glowStyle = highlightBuyButton
     ? {
-        boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
-        transition: "all 0.3s ease-in-out"
-      }
+      boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
+      transition: "all 0.3s ease-in-out"
+    }
     : {};
 
   // Create CSS classes for glow effects
@@ -502,7 +502,7 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
   const priceInputClass = highlightPriceInput
     ? "w-full bg-[#1E2026] text-white py-1.5 px-3 rounded-l text-sm animate-pulse-glow shadow-glow"
     : "w-full bg-[#1E2026] text-white py-1.5 px-3 rounded-l text-sm";
-    
+
   const amountInputClass = highlightAmountInput
     ? "w-full bg-[#1E2026] text-white py-1.5 px-3 rounded-l text-sm animate-pulse-glow shadow-glow"
     : "w-full bg-[#1E2026] text-white py-1.5 px-3 rounded-l text-sm";
@@ -510,23 +510,23 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
   // Create styles for glow effects
   const totalInputStyle = highlightTotalInput
     ? {
-        boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
-        transition: "all 0.3s ease-in-out"
-      }
+      boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
+      transition: "all 0.3s ease-in-out"
+    }
     : {};
-    
+
   const priceInputStyle = highlightPriceInput
     ? {
-        boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
-        transition: "all 0.3s ease-in-out"
-      }
+      boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
+      transition: "all 0.3s ease-in-out"
+    }
     : {};
-    
+
   const amountInputStyle = highlightAmountInput
     ? {
-        boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
-        transition: "all 0.3s ease-in-out"
-      }
+      boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
+      transition: "all 0.3s ease-in-out"
+    }
     : {};
 
   // Reset conversation state handler - Add this to clear states when needed
@@ -578,7 +578,7 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
       {/* Main content area */}
       <div className="flex flex-1 bg-[#0B0E11]">
         {/* Left sidebar - Order book */}
-        <div className="w-[240px] bg-[#0B0E11] overflow-y-auto border-r border-[#1E2026]">
+        <div className="w-[350px] bg-[#0B0E11] overflow-y-auto border-r border-[#1E2026]">
           <div className="bg-[#0B0E11] p-3">
             <div className="flex justify-between text-sm mb-2">
               <span>Order Book</span>
@@ -680,9 +680,9 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
           {/* Main chart area */}
           <div className=" relative bg-[#0B0E11]">
             {/* Placeholder for chart - in a real app you'd use a charting library */}
-            <div className="w-full h-[350px] flex items-center justify-center">
+            <div className="w-full h-96 flex items-center justify-center">
               <img
-                src="/SS/btc-graph.png"
+                src="/SS/btc-graph2.png"
                 alt="Chart placeholder"
                 className="w-full h-full object-cover"
               />
@@ -694,41 +694,37 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
             {/* Main trading tabs */}
             <div className="flex border-b border-[#1E2026] text-sm">
               <button
-                className={`py-2 px-4 ${
-                  activeTab === "spot"
-                    ? "text-white border-b-2 border-[#FCD535] font-medium"
-                    : "text-gray-400"
-                }`}
+                className={`py-2 px-4 ${activeTab === "spot"
+                  ? "text-white border-b-2 border-[#FCD535] font-medium"
+                  : "text-gray-400"
+                  }`}
                 onClick={() => setActiveTab("spot")}
               >
                 Spot
               </button>
               <button
-                className={`py-2 px-4 ${
-                  activeTab === "cross"
-                    ? "text-white border-b-2 border-[#FCD535] font-medium"
-                    : "text-gray-400"
-                }`}
+                className={`py-2 px-4 ${activeTab === "cross"
+                  ? "text-white border-b-2 border-[#FCD535] font-medium"
+                  : "text-gray-400"
+                  }`}
                 onClick={() => setActiveTab("cross")}
               >
                 Cross
               </button>
               <button
-                className={`py-2 px-4 ${
-                  activeTab === "isolated"
-                    ? "text-white border-b-2 border-[#FCD535] font-medium"
-                    : "text-gray-400"
-                }`}
+                className={`py-2 px-4 ${activeTab === "isolated"
+                  ? "text-white border-b-2 border-[#FCD535] font-medium"
+                  : "text-gray-400"
+                  }`}
                 onClick={() => setActiveTab("isolated")}
               >
                 Isolated
               </button>
               <button
-                className={`py-2 px-4 ${
-                  activeTab === "grid"
-                    ? "text-white border-b-2 border-[#FCD535] font-medium"
-                    : "text-gray-400"
-                }`}
+                className={`py-2 px-4 ${activeTab === "grid"
+                  ? "text-white border-b-2 border-[#FCD535] font-medium"
+                  : "text-gray-400"
+                  }`}
                 onClick={() => setActiveTab("grid")}
               >
                 Grid
@@ -903,13 +899,13 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
                         placeholder={orderType === "market" ? "Market" : ""}
                       />
                       <div className="flex flex-col bg-[#1E2026] rounded-r border-l border-[#2B2F36] px-1">
-                        <button 
+                        <button
                           className="text-gray-400 hover:text-white text-[8px] leading-3 pt-1"
                           disabled={orderType === "market"}
                         >
                           ▲
                         </button>
-                        <button 
+                        <button
                           className="text-gray-400 hover:text-white text-[8px] leading-3 pb-1"
                           disabled={orderType === "market"}
                         >
@@ -1035,7 +1031,7 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
                   </div>
 
                   {/* Buy button with highlight */}
-                  <button 
+                  <button
                     className={buyButtonClass}
                     style={glowStyle}
                     onClick={handleBuyButtonClick}
@@ -1071,13 +1067,13 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
                         placeholder={orderType === "market" ? "Market" : ""}
                       />
                       <div className="flex flex-col bg-[#1E2026] rounded-r border-l border-[#2B2F36] px-1">
-                        <button 
+                        <button
                           className="text-gray-400 hover:text-white text-[8px] leading-3 pt-1"
                           disabled={orderType === "market"}
                         >
                           ▲
                         </button>
-                        <button 
+                        <button
                           className="text-gray-400 hover:text-white text-[8px] leading-3 pb-1"
                           disabled={orderType === "market"}
                         >
@@ -1350,11 +1346,10 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
                   </div>
                   <div className="w-1/3 text-right">{pair.price}</div>
                   <div
-                    className={`w-1/3 text-right ${
-                      pair.change.startsWith("+")
-                        ? "text-[#2DBD85]"
-                        : "text-[#F6475D]"
-                    }`}
+                    className={`w-1/3 text-right ${pair.change.startsWith("+")
+                      ? "text-[#2DBD85]"
+                      : "text-[#F6475D]"
+                      }`}
                   >
                     {pair.change}
                   </div>
