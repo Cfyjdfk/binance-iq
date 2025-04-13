@@ -27,8 +27,8 @@ const mockResponses: Record<string, AgentResponse> = {
       }
     }
   },
-  TRUMPCOIN_NOT_FOUND: {
-    text: "Sorry, Binance doesn't have TRUMPCOIN listed in any market. Would you like to explore something else?",
+  PICOIN_NOT_FOUND: {
+    text: "Sorry, Binance doesn't have PICOIN listed in any market. Would you like to explore something else?",
     options: {
       type: 'currency',
       choices: ['BNB', 'USDT']
@@ -85,8 +85,8 @@ const agentService = {
       return mockResponses.BTC_PURCHASE;
     }
     
-    if (message.toLowerCase().includes('trumpcoin')) {
-      return mockResponses.TRUMPCOIN_NOT_FOUND;
+    if (message.toLowerCase().includes('picoin')) {
+      return mockResponses.PICOIN_NOT_FOUND;
     }
     
     if (message.toLowerCase() === 'usdc' || message.toLowerCase() === 'usdt') {

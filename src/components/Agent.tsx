@@ -614,9 +614,9 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
         setHighlightPriceInput(true);
         setHighlightAmountInput(true);
         
-        // Close the agent window after a short delay
+        // Minimize the window instead of closing it after a short delay
         setTimeout(() => {
-          handleClose();
+          handleMinimize();
         }, 1500);
       }, 500);
 
@@ -660,18 +660,31 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
         // Set the flag that we navigated from currency selection
         setNavigatedFromCurrency(true);
         
+        // Check if the message is "Let me take you there right now"
+        const isNavigationMessage = response.text.includes("Let me take you there");
+        
         // If not already on the purchase page, start morphing transition
         if (!window.location.pathname.includes("/purchase")) {
           setMorphDirection("to-floating");
           setIsMorphing(true);
           
+          // Add a longer delay (1000ms) if it's the navigation message
+          const navigationDelay = isNavigationMessage ? 1000 : 100;
+          
           // Navigate to the purchase page after a delay to allow animation to start
           setTimeout(() => {
             navigate("/purchase");
-          }, 100);
+          }, navigationDelay);
         } else {
           // Already on purchase page, no need to morph
-          navigate("/purchase");
+          // Still add delay if it's the navigation message
+          if (isNavigationMessage) {
+            setTimeout(() => {
+              navigate("/purchase");
+            }, 1000);
+          } else {
+            navigate("/purchase");
+          }
         }
         
         return;
@@ -930,9 +943,15 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
                 height: morphDirection === "to-floating" ? "32px" : "40px",
                 transition: "height 0.8s ease-in-out"
               }}></div>
-              <div className={`ml-2 bg-binance-yellow rounded-full ${
-                morphDirection === "to-floating" ? "px-3 py-1.5" : "px-4 py-2.5"
-              } transition-all duration-800 ease-in-out`}></div>
+              <div className={`ml-2 bg-binance-yellow rounded-full flex items-center justify-center ${
+                morphDirection === "to-floating" ? "w-9 h-7" : "w-12 h-9"
+              } transition-all duration-800 ease-in-out`}>
+                {/* Small paper plane icon or similar send icon */}
+                <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M22 2L11 13" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
             </div>
           </div>
         </div>
