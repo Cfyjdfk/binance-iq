@@ -75,45 +75,45 @@
     border-radius: 1.5rem;
     opacity: 1;
   }
-  15% {
-    width: 620px;
-    height: 550px;
-    top: 45%;
-    left: 55%;
-    transform: translate(-45%, -45%);
-    border-radius: 1.4rem;
-    opacity: 1;
-  }
-  30% {
-    width: 550px;
-    height: 530px;
-    top: 40%;
-    left: 65%;
-    transform: translate(-35%, -40%);
-    border-radius: 1.3rem;
-    opacity: 1;
-  }
-  50% {
-    width: 480px;
+  10% {
+    width: 630px;
     height: 520px;
-    top: 35%;
-    left: 75%;
-    transform: translate(-25%, -35%);
-    border-radius: 1.2rem;
+    top: 47%;
+    left: 54%;
+    transform: translate(-46%, -47%);
+    border-radius: 1.45rem;
     opacity: 1;
   }
-  70% {
-    width: 410px;
-    height: 510px;
-    top: 25%;
-    left: 85%;
-    transform: translate(-15%, -25%);
-    border-radius: 1.1rem;
+  25% {
+    width: 550px;
+    height: 450px;
+    top: 42%;
+    left: 62%;
+    transform: translate(-38%, -42%);
+    border-radius: 1.35rem;
     opacity: 1;
   }
-  85% {
+  40% {
+    width: 480px;
+    height: 400px;
+    top: 36%;
+    left: 70%;
+    transform: translate(-30%, -36%);
+    border-radius: 1.25rem;
+    opacity: 1;
+  }
+  60% {
+    width: 420px;
+    height: 350px;
+    top: 30%;
+    left: 80%;
+    transform: translate(-20%, -30%);
+    border-radius: 1.15rem;
+    opacity: 1;
+  }
+  80% {
     width: 350px;
-    height: 505px;
+    height: 320px;
     top: 110px;
     left: calc(100% - 355px);
     transform: translate(0, 0);
@@ -122,9 +122,9 @@
   }
   100% {
     width: 320px;
-    height: 500px;
+    height: 300px;
     top: 100px; 
-    left: calc(100% - 350px);
+    left: calc(100% - 350px - 20px);
     transform: translate(0, 0);
     border-radius: 1rem;
     opacity: 1;
@@ -134,56 +134,56 @@
 @keyframes morphToModal {
   0% {
     width: 320px;
-    height: 500px;
+    height: 300px;
     top: 100px;
     left: calc(100% - 350px);
     transform: translate(0, 0);
     border-radius: 1rem;
     opacity: 1;
   }
-  15% {
+  20% {
     width: 350px;
-    height: 505px;
+    height: 320px;
     top: 110px;
     left: calc(100% - 355px);
     transform: translate(0, 0);
     border-radius: 1.05rem;
     opacity: 1;
   }
-  30% {
-    width: 410px;
-    height: 510px;
-    top: 25%;
-    left: 85%;
-    transform: translate(-15%, -25%);
-    border-radius: 1.1rem;
+  40% {
+    width: 420px;
+    height: 350px;
+    top: 30%;
+    left: 80%;
+    transform: translate(-20%, -30%);
+    border-radius: 1.15rem;
     opacity: 1;
   }
-  50% {
+  60% {
     width: 480px;
-    height: 520px;
-    top: 35%;
-    left: 75%;
-    transform: translate(-25%, -35%);
-    border-radius: 1.2rem;
+    height: 400px;
+    top: 36%;
+    left: 70%;
+    transform: translate(-30%, -36%);
+    border-radius: 1.25rem;
     opacity: 1;
   }
-  70% {
+  75% {
     width: 550px;
-    height: 530px;
-    top: 40%;
-    left: 65%;
-    transform: translate(-35%, -40%);
-    border-radius: 1.3rem;
+    height: 450px;
+    top: 42%;
+    left: 62%;
+    transform: translate(-38%, -42%);
+    border-radius: 1.35rem;
     opacity: 1;
   }
-  85% {
-    width: 620px;
-    height: 550px;
-    top: 45%;
-    left: 55%;
-    transform: translate(-45%, -45%);
-    border-radius: 1.4rem;
+  90% {
+    width: 630px;
+    height: 520px;
+    top: 47%;
+    left: 54%;
+    transform: translate(-46%, -47%);
+    border-radius: 1.45rem;
     opacity: 1;
   }
   100% {
@@ -222,25 +222,96 @@
 .morphing-to-floating {
   position: fixed;
   z-index: 50;
-  animation: morphToFloating 0.5s ease-in-out forwards;
+  animation: morphToFloating 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   transition: box-shadow 0.5s ease;
   will-change: transform, width, height, border-radius;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .morphing-to-modal {
   position: fixed;
   z-index: 50;
-  animation: morphToModal 0.5s ease-in-out forwards;
+  animation: morphToModal 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   transition: box-shadow 0.5s ease;
   will-change: transform, width, height, border-radius;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .fading-overlay {
-  animation: fadeOutOverlay 0.5s ease-in-out forwards;
+  animation: fadeOutOverlay 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 /* Subtle glow effect during transition */
 .morphing-active {
   transition: border-color 0.5s ease;
+}
+
+@keyframes minimizeToCircle {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    border-radius: 1rem;
+  }
+  100% {
+    transform: scale(0.2);
+    opacity: 0.7;
+    border-radius: 50%;
+  }
+}
+
+@keyframes expandFromCircle {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.7;
+    border-radius: 50%;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    border-radius: 1rem;
+  }
+}
+
+/* Add this to ensure proper animation on expand */
+.agent-expanding {
+  animation: expandFromCircle 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: bottom right;
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform, opacity;
+}
+
+/* Add these new animations for the minimizing/expanding functionality */
+.agent-circle-shadow {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.agent-circle-shadow:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes shrinkToCircle {
+  0% {
+    transform: scale(1) translate(0, 0);
+    border-radius: 1rem;
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.2) translate(80px, -80px);
+    border-radius: 50%;
+    opacity: 0.8;
+  }
+}
+
+.agent-shrinking {
+  animation: shrinkToCircle 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: center center;
+  will-change: transform, opacity;
+  position: fixed;
+  z-index: 100;
+  backface-visibility: hidden;
+  perspective: 1000px;
 } 

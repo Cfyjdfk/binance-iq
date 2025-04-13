@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon, MinusIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import agentService from "../services/agentService";
 import { useIQContext, Message, ChatOptions } from "../AIContext";
@@ -42,20 +42,68 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
   const [isPurchasePage, setIsPurchasePage] = useState(false);
   const [isMorphing, setIsMorphing] = useState(false);
   const [morphDirection, setMorphDirection] = useState<"to-floating" | "to-modal" | null>(null);
+  const [isMinimized, setIsMinimized] = useState(false);
+  const [wasJustDragging, setWasJustDragging] = useState(false);
   
   // State for draggable floating window
-  const [position, setPosition] = useState({ x: window.innerWidth - 350, y: 100 });
+  const [position, setPosition] = useState({ 
+    x: window.innerWidth - 350 - 20, // Position 20px from right edge
+    y: 100 
+  });
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-  const [windowSize, setWindowSize] = useState({ width: 320, height: 500 });
+  const [windowSize, setWindowSize] = useState({ width: 320, height: 300 });
   const [isResizing, setIsResizing] = useState(false);
   const [resizeStartPos, setResizeStartPos] = useState({ x: 0, y: 0 });
-  const [resizeStartSize, setResizeStartSize] = useState({ width: 320, height: 500 });
+  const [resizeStartSize, setResizeStartSize] = useState({ width: 320, height: 300 });
   
   const floatingWindowRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const previousPageRef = useRef<string | null>(null);
+
+  // Add a new state for tracking the shrinking animation
+  const [isShrinking, setIsShrinking] = useState(false);
+
+  // Handle minimize to circle
+  const handleMinimize = () => {
+    // Calculate final position before animation starts
+    const bottomRightX = window.innerWidth - 68; // 48px width + 20px margin
+    const bottomRightY = window.innerHeight - 68; // 48px height + 20px margin
+    
+    // Apply GPU-accelerated styles before animation
+    if (floatingWindowRef.current) {
+      floatingWindowRef.current.style.transform = 'translateZ(0)';
+    }
+    
+    // Start the shrinking animation
+    setIsShrinking(true);
+    
+    // Wait for animation to complete before actually minimizing
+    setTimeout(() => {
+      // Update position and minimize
+      setPosition({ x: bottomRightX, y: bottomRightY });
+      setIsMinimized(true);
+      setIsShrinking(false);
+    }, 300); // Match animation duration
+  };
+  
+  // Handle expanding from circle
+  const handleExpand = () => {
+    if (wasJustDragging) {
+      setWasJustDragging(false);
+      return;
+    }
+    
+    // Calculate a better position for the expanded window
+    // Move it diagonally up-left from the circle position to ensure visibility
+    const newX = Math.max(position.x - (windowSize.width - 48), 20);
+    const newY = Math.max(position.y - (windowSize.height - 48), 20);
+    
+    // Update position before expanding
+    setPosition({ x: newX, y: newY });
+    setIsMinimized(false);
+  };
 
   // Check if we're on the purchase page and handle morphing animations
   useEffect(() => {
@@ -70,11 +118,17 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
         setMorphDirection("to-floating");
         setIsMorphing(true);
         
+        // Prepare position for after animation completes
+        setPosition({ 
+          x: window.innerWidth - windowSize.width - 20, // 20px from right edge
+          y: 100 
+        });
+        
         // After animation completes, update the state
         setTimeout(() => {
           setIsMorphing(false);
           setIsPurchasePage(true);
-        }, 800); // Match animation duration
+        }, 500); // Match animation duration
       } 
       else if (!onPurchasePage && wasOnPurchasePage) {
         // Morphing from floating to modal
@@ -85,7 +139,7 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
         setTimeout(() => {
           setIsMorphing(false);
           setIsPurchasePage(false);
-        }, 800); // Match animation duration
+        }, 500); // Match animation duration
       }
       else {
         // No morphing needed, just update the state
@@ -117,11 +171,13 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
         // Get window bounds to ensure it stays visible on screen
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
-        const floatingWindowWidth = floatingWindowRef.current.offsetWidth;
-        const floatingWindowHeight = floatingWindowRef.current.offsetHeight;
+        
+        // Get the current size of the element (different depending on minimized state)
+        const elementWidth = isMinimized ? 48 : floatingWindowRef.current.offsetWidth;
+        const elementHeight = isMinimized ? 48 : floatingWindowRef.current.offsetHeight;
         
         // Limit position so window doesn't go off-screen
-        const limitedX = Math.max(0, Math.min(newX, windowWidth - floatingWindowWidth));
+        const limitedX = Math.max(0, Math.min(newX, windowWidth - elementWidth));
         const limitedY = Math.max(0, Math.min(newY, windowHeight - 100));
         
         setPosition({ x: limitedX, y: limitedY });
@@ -129,6 +185,12 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
     };
     
     const handleMouseUp = () => {
+      if (isDragging) {
+        setWasJustDragging(true);
+        setTimeout(() => {
+          setWasJustDragging(false);
+        }, 200); // Prevent accidental clicks
+      }
       setIsDragging(false);
     };
     
@@ -141,7 +203,7 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isDragging, dragOffset]);
+  }, [isDragging, dragOffset, isMinimized]);
 
   // Setup resize event handlers
   useEffect(() => {
@@ -149,7 +211,7 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
       if (isResizing) {
         // Calculate new width and height
         const newWidth = Math.max(280, resizeStartSize.width + (e.clientX - resizeStartPos.x));
-        const newHeight = Math.max(400, resizeStartSize.height + (e.clientY - resizeStartPos.y));
+        const newHeight = Math.max(300, resizeStartSize.height + (e.clientY - resizeStartPos.y));
         
         // Update window size
         setWindowSize({
@@ -203,7 +265,7 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
   };
 
   useEffect(() => {
-    if (isOpen && inputRef.current) {
+    if (isOpen && inputRef.current && !isMinimized) {
       // Focus the input field
       inputRef.current.focus();
 
@@ -220,7 +282,7 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
         }, 100);
       }
     }
-  }, [isOpen, messages.length]);
+  }, [isOpen, messages.length, isMinimized]);
 
   // Handle close with animation
   const handleClose = () => {
@@ -762,13 +824,28 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
     setShowOptions({ type: null });
   };
 
+  // Add window resize event listener
+  useEffect(() => {
+    const handleResize = () => {
+      if (isPurchasePage && !isMinimized) {
+        // Maintain 20px from right edge when window is resized
+        setPosition(prev => ({
+          ...prev,
+          x: Math.min(prev.x, window.innerWidth - windowSize.width - 20)
+        }));
+      }
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isPurchasePage, isMinimized, windowSize.width]);
+
   if (!isOpen) return null;
 
   // If we're in the morphing state, render the morphing component
   if (isMorphing) {
     return (
       <>
-        {/* Fading overlay (only for to-floating transition) */}
         {morphDirection === "to-floating" && (
           <div 
             className="fixed inset-0 bg-black bg-opacity-50 fading-overlay"
@@ -776,7 +853,6 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
           ></div>
         )}
         
-        {/* Morphing container */}
         <div 
           className={`bg-black border-2 border-binance-yellow overflow-hidden morphing-active ${
             morphDirection === "to-floating" ? "morphing-to-floating" : "morphing-to-modal"
@@ -808,7 +884,7 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
             </button>
           </div>
           
-          {/* Simplified content area during morphing with smoother animations */}
+          {/* Content area */}
           <div className="flex-1 overflow-hidden">
             <div className={`px-4 py-3 transition-all duration-800 ease-in-out ${
               morphDirection === "to-floating" ? "scale-95" : "scale-100"
@@ -843,7 +919,7 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
             )}
           </div>
           
-          {/* Simplified input area with smoother animation */}
+          {/* Input area */}
           <div className={`border-t border-gray-800 transition-all duration-800 ease-in-out ${
             morphDirection === "to-floating" ? "px-3 py-2" : "px-4 py-3"
           }`}>
@@ -864,35 +940,123 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
     );
   }
 
+  // Render minimized circle if isMinimized is true
+  if (isPurchasePage && isMinimized) {
+    return (
+      <div 
+        ref={floatingWindowRef}
+        className="fixed z-40 shadow-lg agent-circle-shadow cursor-move"
+        style={{
+          width: "48px",
+          height: "48px",
+          top: `${position.y}px`,
+          left: `${position.x}px`,
+          borderRadius: "50%",
+          transition: "box-shadow 0.2s ease"
+        }}
+      >
+        <div 
+          className="h-full w-full bg-black border border-binance-yellow flex items-center justify-center rounded-full overflow-hidden"
+          onMouseDown={(e) => {
+            // Record starting position to detect drag vs. click
+            const startX = e.clientX;
+            const startY = e.clientY;
+            let hasMoved = false;
+            
+            // Start the drag operation using our component's handler
+            handleDragStart(e);
+            
+            // Setup temp event listeners to track movement
+            const handleTempMouseMove = (moveEvent: MouseEvent) => {
+              // If moved more than 3px in any direction, consider it a drag
+              if (Math.abs(moveEvent.clientX - startX) > 3 || 
+                  Math.abs(moveEvent.clientY - startY) > 3) {
+                hasMoved = true;
+              }
+            };
+            
+            const handleTempMouseUp = (upEvent: MouseEvent) => {
+              // Remove temp listeners
+              document.removeEventListener('mousemove', handleTempMouseMove);
+              document.removeEventListener('mouseup', handleTempMouseUp);
+              
+              // If didn't move (or barely moved), treat as click to expand
+              if (!hasMoved) {
+                // Calculate the position for expanded window
+                const newX = Math.max(position.x - (windowSize.width - 48), 20);
+                const newY = Math.max(position.y - (windowSize.height - 48), 20);
+                
+                // Cancel any ongoing drag operation by setting the state
+                setIsDragging(false);
+                
+                // Create a fake mouse up event to trigger the end of any drag operations
+                const fakeMouseUp = new MouseEvent('mouseup', {
+                  bubbles: true,
+                  cancelable: true,
+                  view: window
+                });
+                document.dispatchEvent(fakeMouseUp);
+                
+                // After a short delay to let the drag operations fully cancel
+                setTimeout(() => {
+                  // Update position and expand
+                  setPosition({ x: newX, y: newY });
+                  setIsMinimized(false);
+                }, 10);
+              }
+            };
+            
+            // Add temp listeners
+            document.addEventListener('mousemove', handleTempMouseMove);
+            document.addEventListener('mouseup', handleTempMouseUp);
+          }}
+        >
+          <img src="/binance-logo.png" alt="Logo" className="h-6" />
+        </div>
+      </div>
+    );
+  }
+
   // Otherwise, render either floating window or modal based on the page
   if (isPurchasePage) {
     // Floating window style with animation (for purchase page)
     return (
       <div 
         ref={floatingWindowRef}
-        className={`fixed z-40 shadow-lg ${isExiting ? 'agent-sidebar-exit' : 'agent-sidebar'}`}
+        className={`fixed z-40 shadow-lg ${
+          isExiting ? 'agent-sidebar-exit' : 
+          isShrinking ? 'agent-shrinking' :
+          isMinimized === false ? 'agent-expanding' : 'agent-sidebar'
+        }`}
         style={{
           width: `${windowSize.width}px`,
           height: `${windowSize.height}px`,
           top: `${position.y}px`,
           left: `${position.x}px`,
-          borderRadius: "1rem"
+          borderRadius: "1rem",
+          transform: "translateZ(0)",
+          WebkitFontSmoothing: "antialiased"
         }}
       >
         {/* Agent floating window */}
-        <div className="h-full bg-black border border-binance-yellow flex flex-col overflow-hidden rounded-xl">
+        <div className="h-full bg-black border border-binance-yellow flex flex-col overflow-hidden rounded-3xl px-2">
           {/* Header - Draggable */}
           <div 
-            className="flex items-center justify-between p-3 cursor-move"
+            className="flex items-center justify-between p-4 cursor-move"
             onMouseDown={handleDragStart}
           >
             <div className="flex items-center gap-2">
               <img src="/binance-logo.png" alt="Logo" className="h-5" />
-              <span className="text-white text-base font-bold">Agent</span>
+              <span className="text-white text-lg font-bold">Agent</span>
             </div>
-            <button onClick={handleClose} className="text-gray-400 hover:text-white">
-              <XMarkIcon className="h-5 w-5" />
-            </button>
+            <div className="flex items-center gap-2">
+              <button onClick={handleMinimize} className="text-gray-400 hover:text-white">
+                <MinusIcon className="h-5 w-5" />
+              </button>
+              <button onClick={handleClose} className="text-gray-400 hover:text-white">
+                <XMarkIcon className="h-5 w-5" />
+              </button>
+            </div>
           </div>
 
           {/* Quick actions buttons */}
@@ -906,13 +1070,13 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
                   Buy 500 USD worth of BTC
                 </button>
                 <button
-                  className="px-2 py-1 bg-[#1E2026] hover:bg-gray-700 text-white text-xs rounded-full"
+                  className="px-2 py-1 bg-[#1E2026] hover:bg-gray-700 text-white text-sm rounded-full"
                   onClick={() => handleQuickAction("Set up Recurring Buy")}
                 >
                   Set up Recurring Buy
                 </button>
                 <button
-                  className="px-2 py-1 bg-[#1E2026] hover:bg-gray-700 text-white text-xs rounded-full"
+                  className="px-2 py-1 bg-[#1E2026] hover:bg-gray-700 text-white text-sm rounded-full"
                   onClick={() =>
                     handleQuickAction("Show me a newly listed project")
                   }
@@ -925,7 +1089,7 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
 
           {/* Chat messages */}
           {messages.length > 0 && (
-            <div className="flex-1 px-3 py-2 overflow-y-auto binance-scrollbar">
+            <div className="flex-1 px-3 py-2 overflow-y-auto binance-scrollbar bg">
               {messages.map((message, index) => (
                 <div
                   key={index}
@@ -934,7 +1098,7 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
                   }`}
                 >
                   {message.specialUI === "confirmation" ? (
-                    <div className="inline-block bg-black p-2 rounded-lg border border-binance-yellow text-white text-xs">
+                    <div className="inline-block bg-black p-2 rounded-lg border border-binance-yellow text-white text-sm">
                       <div className="text-left">
                         <div className="mb-1">
                           <span className="text-binance-yellow">Price:</span>{" "}
@@ -951,7 +1115,7 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
                       </div>
                       <div className="flex gap-2">
                         <button
-                          className={`px-2 py-1 text-xs font-medium rounded-lg border transition-colors ${
+                          className={`px-2 py-1 text-sm font-medium rounded-lg border transition-colors ${
                             message.data?.buttonPressed === "Cancel"
                               ? "bg-binance-yellow text-black border-binance-yellow"
                               : "bg-black text-white border-binance-yellow hover:bg-[#1E2026]"
@@ -966,7 +1130,7 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
                           Cancel
                         </button>
                         <button
-                          className={`px-2 py-1 text-xs font-medium rounded-lg border transition-colors ${
+                          className={`px-2 py-1 text-sm font-medium rounded-lg border transition-colors ${
                             message.data?.buttonPressed === "Review"
                               ? "bg-binance-yellow text-black border-binance-yellow"
                               : "bg-black text-white border-binance-yellow hover:bg-[#1E2026]"
@@ -983,11 +1147,11 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
                       </div>
                     </div>
                   ) : message.sender === "user" ? (
-                    <div className="bg-[#242731] text-white p-2 rounded-2xl inline-block max-w-[180px] text-xs">
+                    <div className="bg-[#242731] text-white p-2 rounded-2xl inline-block max-w-[180px] text-sm">
                       {message.text}
                     </div>
                   ) : (
-                    <div className="text-white max-w-[220px] text-xs">{message.text}</div>
+                    <div className="text-white max-w-[220px] text-sm">{message.text}</div>
                   )}
                 </div>
               ))}
@@ -996,9 +1160,9 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
               {isLoading && (
                 <div className="flex items-center space-x-2 mb-3">
                   <div className="bg-gray-800 text-white p-1 rounded-lg flex items-center">
-                    <span className="animate-pulse text-xs">●</span>
-                    <span className="animate-pulse delay-100 mx-1 text-xs">●</span>
-                    <span className="animate-pulse delay-200 text-xs">●</span>
+                    <span className="animate-pulse text-sm">●</span>
+                    <span className="animate-pulse delay-100 mx-1 text-sm">●</span>
+                    <span className="animate-pulse delay-200 text-sm">●</span>
                   </div>
                 </div>
               )}
@@ -1012,7 +1176,7 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
                     {showOptions.options.map((option, idx) => (
                       <button
                         key={idx}
-                        className="px-2 py-1 bg-black text-white text-xs font-medium rounded-lg border border-binance-yellow hover:bg-[#1E2026] transition-colors"
+                        className="px-2 py-1 bg-black text-white text-sm font-medium rounded-lg border border-binance-yellow hover:bg-[#1E2026] transition-colors"
                         onClick={() => handleOptionClick(option)}
                       >
                         {option}
@@ -1026,7 +1190,7 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
           )}
 
           {/* Input area */}
-          <div className="px-3 py-2 border-t border-gray-800">
+          <div className="px-4 py-3 ">
             <div className="relative flex items-center">
               <input
                 ref={inputRef}
@@ -1039,7 +1203,7 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
                     ? "Ask anything"
                     : "Buy 500 USD worth of BTC"
                 }
-                className="w-full bg-[#1E2026] text-white text-xs px-3 py-2 rounded-full focus:outline-none focus:ring-1 focus:ring-binance-yellow"
+                className="w-full bg-[#1E2026] text-white text-sm px-3 py-2 rounded-full focus:outline-none focus:ring-1 focus:ring-binance-yellow"
                 disabled={isLoading}
               />
               <button
@@ -1049,7 +1213,7 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
                   isLoading || !inputValue.trim()
                     ? "bg-gray-600 text-gray-400"
                     : "bg-binance-yellow text-black hover:bg-yellow-400"
-                } rounded-full text-xs font-bold`}
+                } rounded-full text-sm font-bold`}
               >
                 Send
               </button>
