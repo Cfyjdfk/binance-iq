@@ -34,7 +34,7 @@ const mockResponses: Record<string, AgentResponse> = {
     text: "Sorry, Binance doesn't have PICOIN listed in any market. Would you like to explore something else?",
     options: {
       type: 'currency',
-      choices: ['BNB', 'USDT']
+      choices: ['BNB', 'BTC']
     }
   },
   PAYMENT_SELECTED: {
@@ -95,7 +95,7 @@ const agentService = {
       return mockResponses.PICOIN_NOT_FOUND;
     }
     
-    if (message.toLowerCase() === 'usdc' || message.toLowerCase() === 'usdt') {
+    if (message.toLowerCase() === 'usdc' || message.toLowerCase() === 'usdt' || message.toLowerCase() === 'btc')  {
       return mockResponses.PAYMENT_SELECTED;
     }
     
