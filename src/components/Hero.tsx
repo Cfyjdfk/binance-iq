@@ -140,7 +140,7 @@ const Hero: React.FC = () => {
             <h2 className="text-5xl md:text-7xl font-bold text-white mb-12">
               USERS TRUST US
             </h2>
-          
+
             <div className="mt-16 mb-16">
               <div className="relative">
                 <input

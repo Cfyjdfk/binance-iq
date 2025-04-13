@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { XMarkIcon, MinusIcon,  } from "@heroicons/react/24/outline";
+import { XMarkIcon, MinusIcon, } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import agentService from "../services/agentService";
 import { useIQContext, Message, ChatOptions } from "../AIContext";
@@ -19,14 +19,14 @@ interface AgentProps {
 }
 
 const PinIcon = ({ className }: { className?: string }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
     className={className}
   >
     <path d="M9 4v6l-2 4v2h10v-2l-2-4V4" />
@@ -240,25 +240,25 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
         // Get the current mouse position
         const mouseX = e.clientX;
         const mouseY = e.clientY;
-        
+
         // Calculate the bottom-right corner position (this stays fixed)
         const bottomRightX = position.x + windowSize.width;
         const bottomRightY = position.y + windowSize.height;
-        
+
         // Calculate new top-left position (bounded to prevent the window from collapsing)
         const newX = Math.min(mouseX, bottomRightX - 280);
         const newY = Math.min(mouseY, bottomRightY - 300);
-        
+
         // Calculate new dimensions based on the distance between top-left and bottom-right
         const newWidth = bottomRightX - newX;
         const newHeight = bottomRightY - newY;
-        
+
         // Update position
         setPosition({
           x: newX,
           y: newY
         });
-        
+
         // Update size
         setWindowSize({
           width: newWidth,
@@ -285,7 +285,7 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
   const handleDragStart = (e: React.MouseEvent<HTMLDivElement>) => {
     // Skip if window is pinned
     if (isPinned) return;
-    
+
     if (floatingWindowRef.current) {
       const rect = floatingWindowRef.current.getBoundingClientRect();
       setDragOffset({
@@ -931,11 +931,10 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
         )}
 
         <div
-          className={`bg-black border-2 border-binance-yellow overflow-hidden morphing-active ${
-            morphDirection === "to-floating"
-              ? "morphing-to-floating"
-              : "morphing-to-modal"
-          }`}
+          className={`bg-black border-2 border-binance-yellow overflow-hidden morphing-active ${morphDirection === "to-floating"
+            ? "morphing-to-floating"
+            : "morphing-to-modal"
+            }`}
           style={{
             borderColor:
               morphDirection === "to-floating"
@@ -945,31 +944,27 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
         >
           {/* Same content structure as both components with smoother transitions */}
           <div
-            className={`flex items-center justify-between border-b border-gray-800 ${
-              morphDirection === "to-floating" ? "p-3" : "p-4"
-            } transition-all duration-800 ease-in-out`}
+            className={`flex items-center justify-between border-b border-gray-800 ${morphDirection === "to-floating" ? "p-3" : "p-4"
+              } transition-all duration-800 ease-in-out`}
           >
             <div className="flex items-center gap-2">
               <img
                 src="/binance-logo.png"
                 alt="Logo"
-                className={`transition-all duration-800 ease-in-out ${
-                  morphDirection === "to-floating" ? "h-5" : "h-6"
-                }`}
+                className={`transition-all duration-800 ease-in-out ${morphDirection === "to-floating" ? "h-5" : "h-6"
+                  }`}
               />
               <span
-                className={`text-white font-bold transition-all duration-800 ease-in-out ${
-                  morphDirection === "to-floating" ? "text-base" : "text-lg"
-                }`}
+                className={`text-white font-bold transition-all duration-800 ease-in-out ${morphDirection === "to-floating" ? "text-base" : "text-lg"
+                  }`}
               >
-                Agent
+                IQ
               </span>
             </div>
             <button className="text-gray-400">
               <XMarkIcon
-                className={`transition-all duration-800 ease-in-out ${
-                  morphDirection === "to-floating" ? "h-5 w-5" : "h-6 w-6"
-                }`}
+                className={`transition-all duration-800 ease-in-out ${morphDirection === "to-floating" ? "h-5 w-5" : "h-6 w-6"
+                  }`}
               />
             </button>
           </div>
@@ -977,9 +972,8 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
           {/* Content area */}
           <div className="flex-1 overflow-hidden">
             <div
-              className={`px-4 py-3 transition-all duration-800 ease-in-out ${
-                morphDirection === "to-floating" ? "scale-95" : "scale-100"
-              }`}
+              className={`px-4 py-3 transition-all duration-800 ease-in-out ${morphDirection === "to-floating" ? "scale-95" : "scale-100"
+                }`}
               style={{ transformOrigin: "center top" }}
             >
               {messages.length > 0 ? (
@@ -998,11 +992,10 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
             {/* Show options if they exist */}
             {showOptions.type && showOptions.options && (
               <div
-                className={`flex flex-wrap gap-2 px-4 transition-all duration-800 ease-in-out ${
-                  morphDirection === "to-floating"
-                    ? "scale-95 opacity-90"
-                    : "scale-100 opacity-100"
-                }`}
+                className={`flex flex-wrap gap-2 px-4 transition-all duration-800 ease-in-out ${morphDirection === "to-floating"
+                  ? "scale-95 opacity-90"
+                  : "scale-100 opacity-100"
+                  }`}
                 style={{ transformOrigin: "center center" }}
               >
                 {showOptions.options.map((option, idx) => (
@@ -1019,14 +1012,12 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
 
           {/* Input area */}
           <div
-            className={`border-t border-gray-800 transition-all duration-800 ease-in-out ${
-              morphDirection === "to-floating" ? "px-3 py-2" : "px-4 py-3"
-            }`}
+            className={`border-t border-gray-800 transition-all duration-800 ease-in-out ${morphDirection === "to-floating" ? "px-3 py-2" : "px-4 py-3"
+              }`}
           >
             <div
-              className={`relative flex items-center transition-all duration-800 ease-in-out ${
-                morphDirection === "to-floating" ? "scale-95" : "scale-100"
-              }`}
+              className={`relative flex items-center transition-all duration-800 ease-in-out ${morphDirection === "to-floating" ? "scale-95" : "scale-100"
+                }`}
               style={{ transformOrigin: "center center" }}
             >
               <div
@@ -1037,9 +1028,8 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
                 }}
               ></div>
               <div
-                className={`ml-2 bg-binance-yellow rounded-full flex items-center justify-center ${
-                  morphDirection === "to-floating" ? "w-9 h-7" : "w-12 h-9"
-                } transition-all duration-800 ease-in-out`}
+                className={`ml-2 bg-binance-yellow rounded-full flex items-center justify-center ${morphDirection === "to-floating" ? "w-9 h-7" : "w-12 h-9"
+                  } transition-all duration-800 ease-in-out`}
               >
                 {/* Small paper plane icon or similar send icon */}
                 <svg
@@ -1159,15 +1149,14 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
     return (
       <div
         ref={floatingWindowRef}
-        className={`fixed z-40 shadow-lg ${
-          isExiting
-            ? "agent-sidebar-exit"
-            : isShrinking
+        className={`fixed z-40 shadow-lg ${isExiting
+          ? "agent-sidebar-exit"
+          : isShrinking
             ? "agent-shrinking"
             : isMinimized === false
-            ? "agent-expanding"
-            : "agent-sidebar"
-        }`}
+              ? "agent-expanding"
+              : "agent-sidebar"
+          }`}
         style={{
           width: `${windowSize.width}px`,
           height: `${windowSize.height}px`,
@@ -1261,9 +1250,8 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
               {messages.map((message, index) => (
                 <div
                   key={index}
-                  className={`mb-3 ${
-                    message.sender === "user" ? "text-right" : "text-left"
-                  }`}
+                  className={`mb-3 ${message.sender === "user" ? "text-right" : "text-left"
+                    }`}
                 >
                   {message.specialUI === "confirmation" ? (
                     <div className="inline-block bg-black p-2 rounded-lg border border-binance-yellow text-white text-sm">
@@ -1283,11 +1271,10 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
                       </div>
                       <div className="flex gap-2">
                         <button
-                          className={`px-2 py-1 text-sm font-medium rounded-lg border transition-colors ${
-                            message.data?.buttonPressed === "Cancel"
-                              ? "bg-binance-yellow text-black border-binance-yellow"
-                              : "bg-black text-white border-binance-yellow hover:bg-[#1E2026]"
-                          }`}
+                          className={`px-2 py-1 text-sm font-medium rounded-lg border transition-colors ${message.data?.buttonPressed === "Cancel"
+                            ? "bg-binance-yellow text-black border-binance-yellow"
+                            : "bg-black text-white border-binance-yellow hover:bg-[#1E2026]"
+                            }`}
                           onClick={() =>
                             message.data?.buttonPressed
                               ? null
@@ -1298,11 +1285,10 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
                           Cancel
                         </button>
                         <button
-                          className={`px-2 py-1 text-sm font-medium rounded-lg border transition-colors ${
-                            message.data?.buttonPressed === "Review"
-                              ? "bg-binance-yellow text-black border-binance-yellow"
-                              : "bg-black text-white border-binance-yellow hover:bg-[#1E2026]"
-                          }`}
+                          className={`px-2 py-1 text-sm font-medium rounded-lg border transition-colors ${message.data?.buttonPressed === "Review"
+                            ? "bg-binance-yellow text-black border-binance-yellow"
+                            : "bg-black text-white border-binance-yellow hover:bg-[#1E2026]"
+                            }`}
                           onClick={() =>
                             message.data?.buttonPressed
                               ? null
@@ -1381,11 +1367,10 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
               <button
                 onClick={handleSendMessage}
                 disabled={isLoading || !inputValue.trim()}
-                className={`ml-2 px-3 py-1 ${
-                  isLoading || !inputValue.trim()
-                    ? "bg-gray-600 text-gray-400"
-                    : "bg-binance-yellow text-black hover:bg-yellow-400"
-                } rounded-full text-sm font-bold`}
+                className={`ml-2 px-3 py-1 ${isLoading || !inputValue.trim()
+                  ? "bg-gray-600 text-gray-400"
+                  : "bg-binance-yellow text-black hover:bg-yellow-400"
+                  } rounded-full text-sm font-bold`}
               >
                 Send
               </button>
@@ -1406,15 +1391,14 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
 
         {/* Modal with animation */}
         <div
-          className={`bg-black border-2 border-binance-yellow rounded-3xl w-[690px] z-10 relative overflow-hidden ${
-            isExiting ? "modal-exit" : "modal-enter"
-          }`}
+          className={`bg-black border-2 border-binance-yellow rounded-3xl w-[690px] z-10 relative overflow-hidden ${isExiting ? "modal-exit" : "modal-enter"
+            }`}
         >
           {/* Header */}
           <div className="flex items-center justify-between p-5">
             <div className="flex items-center gap-2">
               <img src="/binance-logo.png" alt="Logo" className="h-7" />
-              <span className="text-white text-xl font-bold">Agent</span>
+              <span className="text-white text-xl font-bold">IQ</span>
             </div>
             <button
               onClick={handleClose}
@@ -1458,9 +1442,8 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
               {messages.map((message, index) => (
                 <div
                   key={index}
-                  className={`mb-4 ${
-                    message.sender === "user" ? "text-right" : "text-left"
-                  }`}
+                  className={`mb-4 ${message.sender === "user" ? "text-right" : "text-left"
+                    }`}
                 >
                   {message.specialUI === "confirmation" ? (
                     <div className="inline-block bg-black p-3 rounded-lg border border-binance-yellow text-white text-sm">
@@ -1480,11 +1463,10 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
                       </div>
                       <div className="flex gap-2">
                         <button
-                          className={`px-3 py-1 text-xs font-medium rounded-lg border transition-colors ${
-                            message.data?.buttonPressed === "Cancel"
-                              ? "bg-binance-yellow text-black border-binance-yellow"
-                              : "bg-black text-white border-binance-yellow hover:bg-[#1E2026]"
-                          }`}
+                          className={`px-3 py-1 text-xs font-medium rounded-lg border transition-colors ${message.data?.buttonPressed === "Cancel"
+                            ? "bg-binance-yellow text-black border-binance-yellow"
+                            : "bg-black text-white border-binance-yellow hover:bg-[#1E2026]"
+                            }`}
                           onClick={() =>
                             message.data?.buttonPressed
                               ? null
@@ -1495,11 +1477,10 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
                           Cancel
                         </button>
                         <button
-                          className={`px-3 py-1 text-xs font-medium rounded-lg border transition-colors ${
-                            message.data?.buttonPressed === "Review"
-                              ? "bg-binance-yellow text-black border-binance-yellow"
-                              : "bg-black text-white border-binance-yellow hover:bg-[#1E2026]"
-                          }`}
+                          className={`px-3 py-1 text-xs font-medium rounded-lg border transition-colors ${message.data?.buttonPressed === "Review"
+                            ? "bg-binance-yellow text-black border-binance-yellow"
+                            : "bg-black text-white border-binance-yellow hover:bg-[#1E2026]"
+                            }`}
                           onClick={() =>
                             message.data?.buttonPressed
                               ? null
@@ -1574,11 +1555,10 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
               <button
                 onClick={handleSendMessage}
                 disabled={isLoading || !inputValue.trim()}
-                className={`ml-2 px-6 py-3 ${
-                  isLoading || !inputValue.trim()
-                    ? "bg-gray-600 text-gray-400"
-                    : "bg-binance-yellow text-black hover:bg-yellow-400"
-                } rounded-full text-sm font-bold`}
+                className={`ml-2 px-6 py-3 ${isLoading || !inputValue.trim()
+                  ? "bg-gray-600 text-gray-400"
+                  : "bg-binance-yellow text-black hover:bg-yellow-400"
+                  } rounded-full text-sm font-bold`}
               >
                 Send
               </button>
