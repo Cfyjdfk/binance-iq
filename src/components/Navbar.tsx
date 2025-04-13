@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { MagnifyingGlassIcon, SunIcon, RocketLaunchIcon } from '@heroicons/react/24/outline';
 
 interface NavbarProps {
@@ -11,14 +12,16 @@ const Navbar: React.FC<NavbarProps> = ({ openAgent }) => {
     return (
         <nav className="bg-binance-dark text-white px-6 py-3 flex items-center justify-between">
             <div className="flex items-center space-x-8">
-                <img src="/binance-logo.svg" alt="Binance" className="h-8" />
+                <Link to="/">
+                  <img src="/binance-logo.svg" alt="Binance" className="h-8" />
+                </Link>
 
                 <div className="flex space-x-6">
-                    <a href="#" className="hover:text-binance-yellow">Buy Crypto</a>
+                    <Link to="/purchase" className="hover:text-binance-yellow">Buy Crypto</Link>
                     <a href="#" className="hover:text-binance-yellow">Markets</a>
                     <a href="#" className="hover:text-binance-yellow">Trade</a>
                     <a href="#" className="hover:text-binance-yellow">Futures</a>
-                    <a href="#" className="hover:text-binance-yellow">Earn</a>
+                    <Link to="/launchpool" className="hover:text-binance-yellow">Launchpool</Link>
                     <a href="#" className="hover:text-binance-yellow">Square</a>
                     <div className="relative group">
                         <button className="hover:text-binance-yellow">More</button>

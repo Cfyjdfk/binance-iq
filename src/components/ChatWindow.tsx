@@ -209,7 +209,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
               alt="Binance"
               className="w-[24px] h-[24px]"
             />
-            IQ
+            <span className="text-white text-xl font-bold">IQ</span>
           </div>
           <button
             onClick={onClose}

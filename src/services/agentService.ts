@@ -8,7 +8,7 @@ export interface AgentResponse {
     choices?: string[];
     data?: {
       coin?: string;
-      amount?: string;
+      buyAmount?: string;
       price?: string;
     };
   };
@@ -23,7 +23,7 @@ const mockResponses: Record<string, AgentResponse> = {
       choices: ['USDC', 'USDT'],
       data: {
         coin: 'BTC',
-        amount: '500'
+        buyAmount: '500'
       }
     }
   },
@@ -35,7 +35,13 @@ const mockResponses: Record<string, AgentResponse> = {
     }
   },
   PAYMENT_SELECTED: {
-    text: "Awesome! Let me take you there right now.\n\nI'm assuming you want to trade on the Spot market. Would you want to make a Limit or Market order?",
+    text: "Awesome! Let me take you there right now.",
+    options: {
+      type: null
+    }
+  },
+  ORDER_TYPE_PROMPT: {
+    text: "I'm assuming you want to trade on the Spot market. Would you want to make a Limit or Market order?",
     options: {
       type: 'orderType',
       choices: ['Limit', 'Market']
@@ -48,7 +54,7 @@ const mockResponses: Record<string, AgentResponse> = {
       data: {
         price: '81863.98',
         coin: 'BTC',
-        amount: '0.0061'
+        buyAmount: '0.0061'
       }
     }
   },
@@ -67,6 +73,11 @@ const agentService = {
     
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // Handle specific case for orderType, used when navigated to purchase page
+    if (message === "orderType") {
+      return mockResponses.ORDER_TYPE_PROMPT;
+    }
     
     // Simulate response based on message content
     if (message.toLowerCase().includes('buy') && message.toLowerCase().includes('bitcoin') || 
