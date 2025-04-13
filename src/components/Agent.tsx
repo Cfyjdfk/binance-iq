@@ -52,6 +52,7 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
     setHighlightTotalInput,
     setHighlightPriceInput,
     setHighlightAmountInput,
+    setHighlightOrderTypes,
   } = useIQContext();
 
   const [inputValue, setInputValue] = useState("");
@@ -372,6 +373,11 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
                 amount: response.options.data?.buyAmount,
                 price: response.options.data?.price,
               });
+              
+              // If orderType options are being shown, highlight the order type buttons
+              if (response.options.type === "orderType") {
+                setHighlightOrderTypes(true);
+              }
             }
           } catch (error) {
             console.error("Error processing order type options:", error);
@@ -577,6 +583,9 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
         };
       }
     });
+    
+    // Turn off order type highlighting after selection
+    setHighlightOrderTypes(false);
   };
 
   // When an order amount is set or confirmed, this handles updating with the real value
@@ -813,6 +822,11 @@ const Agent: React.FC<AgentProps> = ({ isOpen, onClose, showToast }) => {
                 amount: response.options.data?.buyAmount,
                 price: response.options.data?.price,
               });
+              
+              // If new orderType options are being shown, highlight the order type buttons
+              if (response.options.type === "orderType") {
+                setHighlightOrderTypes(true);
+              }
             }
           }
         } catch (error) {

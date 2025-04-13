@@ -35,7 +35,9 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
     highlightPriceInput,
     setHighlightPriceInput,
     highlightAmountInput,
-    setHighlightAmountInput
+    setHighlightAmountInput,
+    highlightOrderTypes,
+    setHighlightOrderTypes
   } = useIQContext();
   
   // Create local state that syncs with context
@@ -47,7 +49,7 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
   const [sellTotal, setSellTotal] = useState<string>(purchaseState.sellTotal);
   const [buySliderValue, setBuySliderValue] = useState<number>(purchaseState.buySliderValue);
   const [sellSliderValue, setSellSliderValue] = useState<number>(purchaseState.sellSliderValue);
-  const [orderType, setOrderType] = useState<"limit" | "market" | "stop-limit">(
+  const [orderType, setOrderType] = useState<"limit" | "market" | "stop-limit" | null>(
     purchaseState.orderType
   );
   const [tpSl, setTpSl] = useState<boolean>(false);
@@ -70,6 +72,9 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
         `Successfully purchased ${buyAmount} BTC for ${buyTotal} USDT`
       );
     }
+    
+    // Turn off order type highlighting when completed
+    setHighlightOrderTypes(false);
     
     // Reset all highlights
     setHighlightBuyButton(false);
@@ -524,6 +529,14 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
       }
     : {};
 
+  // Reset conversation state handler - Add this to clear states when needed
+  const resetTradeForm = () => {
+    setBuyPrice("81863.98");
+    setBuyAmount("0.00000");
+    setBuyTotal("0");
+    setBuySliderValue(0);
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-[#0B0E11] text-white">
       {/* Top info bar */}
@@ -726,9 +739,21 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
             <div className="flex items-center justify-between py-2 px-4 border-b border-[#1E2026]">
               <div className="flex space-x-4">
                 <button
-                  className={`${
-                    orderType === "limit" ? "text-white" : "text-gray-400"
+                  className={`px-3 py-1 rounded-md ${
+                    orderType === "limit" 
+                      ? "text-binance-yellow" 
+                      : "text-gray-400"
+                  } ${
+                    highlightOrderTypes ? "animate-pulse-glow" : ""
                   }`}
+                  style={{
+                    ...(highlightOrderTypes
+                      ? {
+                          boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
+                          transition: "all 0.3s ease-in-out"
+                        }
+                      : {})
+                  }}
                   onClick={() => {
                     setOrderType("limit");
                     if (buyPrice === "Market") {
@@ -745,9 +770,21 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
                   Limit
                 </button>
                 <button
-                  className={`${
-                    orderType === "market" ? "text-white" : "text-gray-400"
+                  className={`px-3 py-1 rounded-md ${
+                    orderType === "market" 
+                      ? "text-binance-yellow" 
+                      : "text-gray-400"
+                  } ${
+                    highlightOrderTypes ? "animate-pulse-glow" : ""
                   }`}
+                  style={{
+                    ...(highlightOrderTypes
+                      ? {
+                          boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
+                          transition: "all 0.3s ease-in-out"
+                        }
+                      : {})
+                  }}
                   onClick={() => {
                     setOrderType("market");
                     setBuyPrice("Market");
@@ -763,9 +800,9 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
                 </button>
                 <div className="flex items-center">
                   <button
-                    className={`${
+                    className={`px-3 py-1 rounded-md ${
                       orderType === "stop-limit"
-                        ? "text-white"
+                        ? "text-binance-yellow"
                         : "text-gray-400"
                     } mr-1`}
                     onClick={() => {

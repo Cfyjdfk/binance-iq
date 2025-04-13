@@ -17,6 +17,12 @@ export interface AgentResponse {
 // Backend API URL
 const API_URL = 'http://localhost:8000';
 
+// Simulate loading delay (ms) for hardcoded responses
+const RESPONSE_DELAY = 600;
+
+// Helper function to simulate network delay
+const simulateDelay = () => new Promise(resolve => setTimeout(resolve, RESPONSE_DELAY));
+
 // Mock data for different response types
 const mockResponses: Record<string, AgentResponse> = {
   BTC_PURCHASE: {
@@ -81,6 +87,9 @@ const isBTCBuyMessage = (message: string): boolean => {
 
 const agentService = {
   async processMessage(message: string): Promise<AgentResponse> {
+    // Always simulate a network delay for consistent UX
+    await simulateDelay();
+    
     // Handle specific case for orderType, used when navigated to purchase page
     if (message === "orderType") {
       return mockResponses.ORDER_TYPE_PROMPT;
@@ -109,6 +118,7 @@ const agentService = {
     
     // For all other queries, use the RAG backend
     try {
+      // No need for additional delay here since the actual API call will take time
       const response = await axios.post(`${API_URL}/chat`, { message });
       return {
         text: response.data.response,

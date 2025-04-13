@@ -36,7 +36,7 @@ export interface PurchaseState {
   sellTotal: string;
   sellSliderValue: number;
   // Shared
-  orderType: "limit" | "market" | "stop-limit";
+  orderType: "limit" | "market" | "stop-limit" | null;
 }
 
 interface AIContextType {
@@ -65,6 +65,9 @@ interface AIContextType {
   setHighlightPriceInput: React.Dispatch<React.SetStateAction<boolean>>;
   highlightAmountInput: boolean;
   setHighlightAmountInput: React.Dispatch<React.SetStateAction<boolean>>;
+  // Highlight order type options flag
+  highlightOrderTypes: boolean;
+  setHighlightOrderTypes: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // Create context with a default value matching the expected shape
@@ -101,6 +104,8 @@ export const IQContext = createContext<AIContextType>({
   setHighlightPriceInput: () => {},
   highlightAmountInput: false,
   setHighlightAmountInput: () => {},
+  highlightOrderTypes: false,
+  setHighlightOrderTypes: () => {},
 });
 
 interface AIProviderProps {
@@ -123,12 +128,13 @@ export const AIProvider = ({ children }: AIProviderProps) => {
     sellAmount: "0.00000",
     sellTotal: "0",
     sellSliderValue: 0,
-    orderType: "limit",
+    orderType: null,
   });
   const [highlightBuyButton, setHighlightBuyButton] = useState<boolean>(false);
   const [highlightTotalInput, setHighlightTotalInput] = useState<boolean>(false);
   const [highlightPriceInput, setHighlightPriceInput] = useState<boolean>(false);
   const [highlightAmountInput, setHighlightAmountInput] = useState<boolean>(false);
+  const [highlightOrderTypes, setHighlightOrderTypes] = useState<boolean>(false);
 
   // Only one can be open at a time
   useEffect(() => {
@@ -168,6 +174,8 @@ export const AIProvider = ({ children }: AIProviderProps) => {
         setHighlightPriceInput,
         highlightAmountInput,
         setHighlightAmountInput,
+        highlightOrderTypes,
+        setHighlightOrderTypes,
       }}
     >
       {children}
