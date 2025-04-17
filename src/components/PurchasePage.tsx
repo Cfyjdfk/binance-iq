@@ -550,9 +550,9 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
   // Create a style for the glow effect
   const glowStyle = highlightBuyButton
     ? {
-        boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
-        transition: "all 0.3s ease-in-out",
-      }
+      boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
+      transition: "all 0.3s ease-in-out",
+    }
     : {};
 
   // Create CSS classes for glow effects
@@ -571,23 +571,23 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
   // Create styles for glow effects
   const totalInputStyle = highlightTotalInput
     ? {
-        boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
-        transition: "all 0.3s ease-in-out",
-      }
+      boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
+      transition: "all 0.3s ease-in-out",
+    }
     : {};
 
   const priceInputStyle = highlightPriceInput
     ? {
-        boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
-        transition: "all 0.3s ease-in-out",
-      }
+      boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
+      transition: "all 0.3s ease-in-out",
+    }
     : {};
 
   const amountInputStyle = highlightAmountInput
     ? {
-        boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
-        transition: "all 0.3s ease-in-out",
-      }
+      boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
+      transition: "all 0.3s ease-in-out",
+    }
     : {};
 
   // Reset conversation state handler - Add this to clear states when needed
@@ -743,7 +743,7 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
           {/* Main chart area */}
           <div className=" relative bg-[#0B0E11]">
             {/* Placeholder for chart - in a real app you'd use a charting library */}
-            <div className="w-full h-96 flex items-center justify-center">
+            <div className="w-full h-[500px] flex items-center justify-center">
               <img
                 src="/SS/btc-graph2.png"
                 alt="Chart placeholder"
@@ -757,41 +757,37 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
             {/* Main trading tabs */}
             <div className="flex border-b border-[#1E2026] text-sm">
               <button
-                className={`py-2 px-4 ${
-                  activeTab === "spot"
+                className={`py-2 px-4 ${activeTab === "spot"
                     ? "text-white border-b-2 border-[#FCD535] font-medium"
                     : "text-gray-400"
-                }`}
+                  }`}
                 onClick={() => setActiveTab("spot")}
               >
                 Spot
               </button>
               <button
-                className={`py-2 px-4 ${
-                  activeTab === "cross"
+                className={`py-2 px-4 ${activeTab === "cross"
                     ? "text-white border-b-2 border-[#FCD535] font-medium"
                     : "text-gray-400"
-                }`}
+                  }`}
                 onClick={() => setActiveTab("cross")}
               >
                 Cross
               </button>
               <button
-                className={`py-2 px-4 ${
-                  activeTab === "isolated"
+                className={`py-2 px-4 ${activeTab === "isolated"
                     ? "text-white border-b-2 border-[#FCD535] font-medium"
                     : "text-gray-400"
-                }`}
+                  }`}
                 onClick={() => setActiveTab("isolated")}
               >
                 Isolated
               </button>
               <button
-                className={`py-2 px-4 ${
-                  activeTab === "grid"
+                className={`py-2 px-4 ${activeTab === "grid"
                     ? "text-white border-b-2 border-[#FCD535] font-medium"
                     : "text-gray-400"
-                }`}
+                  }`}
                 onClick={() => setActiveTab("grid")}
               >
                 Grid
@@ -802,17 +798,16 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
             <div className="flex items-center justify-between py-2 px-4 border-b border-[#1E2026]">
               <div className="flex space-x-4">
                 <button
-                  className={`px-3 py-1 rounded-md ${
-                    orderType === "limit"
+                  className={`px-3 py-1 rounded-md ${orderType === "limit"
                       ? "text-binance-yellow"
                       : "text-gray-400"
-                  } ${highlightOrderTypes ? "animate-pulse-glow" : ""}`}
+                    } ${highlightOrderTypes ? "animate-pulse-glow" : ""}`}
                   style={{
                     ...(highlightOrderTypes
                       ? {
-                          boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
-                          transition: "all 0.3s ease-in-out",
-                        }
+                        boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
+                        transition: "all 0.3s ease-in-out",
+                      }
                       : {}),
                   }}
                   onClick={() => {
@@ -831,17 +826,16 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
                   Limit
                 </button>
                 <button
-                  className={`px-3 py-1 rounded-md ${
-                    orderType === "market"
+                  className={`px-3 py-1 rounded-md ${orderType === "market"
                       ? "text-binance-yellow"
                       : "text-gray-400"
-                  } ${highlightOrderTypes ? "animate-pulse-glow" : ""}`}
+                    } ${highlightOrderTypes ? "animate-pulse-glow" : ""}`}
                   style={{
                     ...(highlightOrderTypes
                       ? {
-                          boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
-                          transition: "all 0.3s ease-in-out",
-                        }
+                        boxShadow: "0 0 15px 5px rgba(252, 213, 53, 0.7)",
+                        transition: "all 0.3s ease-in-out",
+                      }
                       : {}),
                   }}
                   onClick={() => {
@@ -859,11 +853,10 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
                 </button>
                 <div className="flex items-center">
                   <button
-                    className={`px-3 py-1 rounded-md ${
-                      orderType === "stop-limit"
+                    className={`px-3 py-1 rounded-md ${orderType === "stop-limit"
                         ? "text-binance-yellow"
                         : "text-gray-400"
-                    } mr-1`}
+                      } mr-1`}
                     onClick={() => {
                       setOrderType("stop-limit");
                       if (buyPrice === "Market") {
@@ -1409,11 +1402,10 @@ const PurchasePage: React.FC<PurchasePageProps> = ({ showToast }) => {
                   </div>
                   <div className="w-1/3 text-right">{pair.price}</div>
                   <div
-                    className={`w-1/3 text-right ${
-                      pair.change.startsWith("+")
+                    className={`w-1/3 text-right ${pair.change.startsWith("+")
                         ? "text-[#2DBD85]"
                         : "text-[#F6475D]"
-                    }`}
+                      }`}
                   >
                     {pair.change}
                   </div>
